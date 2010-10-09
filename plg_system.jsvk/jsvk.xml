@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="plugin" group="system">
+	<name>System - JSVK</name>
+	<author>VampiRUS</author>
+	<creationDate>May 2010</creationDate>
+	<copyright></copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>vamp1rus@yandex.ru</authorEmail>
+	<authorUrl>vampirus.ru</authorUrl>
+	<version>0.0.1</version>
+	<description>Заполнение полей JS из Вконтакте при регистрации</description>
+	<files>
+		<filename plugin="jsvk">jsvk.php</filename>
+	</files>
+	<params/>
+</install>

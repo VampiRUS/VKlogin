@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0" type="plugin" group="user">
+	<name>VKlogin register handler</name>
+	<author>VampiRUS</author>
+	<creationDate>2010-09-16</creationDate>
+	<copyright>vampirus.ru</copyright>
+	<license>http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU/GPL version 2</license>
+	<authorEmail>vamp1rus@yandex.ru</authorEmail>
+	<authorUrl>vampirus.ru</authorUrl>
+	<version>1.2.3</version>
+	<description>VKLOGIN.</description>
+	<files>
+		<filename plugin="vkloginregister">vkloginregister.php</filename>
+		<filename>index.html</filename>
+	</files>
+    <params>
+	</params>
+	<tabs>
+	</tabs>
+	<database>
+	</database>
+</cbinstall>

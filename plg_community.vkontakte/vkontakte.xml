@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<install version="1.5" type="plugin" group="community">
+  <name>VKontakte integration</name>
+  <version>0.0.1</version>
+  <creationDate>May 2010</creationDate>
+  <author>VampiRUS</author>
+  <authorEmail>vamp1rus@yandex.ru</authorEmail>
+  <authorUrl>http://vampirus.ru/</authorUrl>
+  <copyright></copyright>
+  <license>GNU GPL v2.0</license>
+  <description>JS Community VKontakte integration plugin</description>
+  <files>  	
+	<filename plugin="vkontakte">vkontakte.php</filename>
+  </files>
+</install>

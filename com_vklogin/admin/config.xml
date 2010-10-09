@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<params>
+		<param name="appid" type="text" default="" label="ID приложения" description="ID приложения"/>
+		<param name="secret" type="text" default="" label="Защищенный ключ" description="Защищенный ключ"/>
+		<param name="jomsocial" type="radio" default="0" label="Social Integration" description="Social Integration">
+			<option value="0">No</option>
+			<option value="1">JS</option>
+			<option value="2">CB</option>
+		</param>
+		<param name="useractivation" type="hidden" default="0"/>
+ </params>
+</config>
