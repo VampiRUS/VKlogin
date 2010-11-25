@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/plugin-install.dtd">
-<install type="plugin" group="jcomments" version="1.5.0">
+<install type="plugin" group="jcomments" version="1.5.0" method="upgrade">
 	<name>JComments - VKontakte Avatar</name>
-	<creationDate>06.06.2010</creationDate>
+	<creationDate>25.11.2010</creationDate>
 	<author>VampiRUS</author>
 	<copyright></copyright> 
 	<authorEmail>vamp1rus@yandex.ru</authorEmail>
 	<authorUrl>http://vampirus.ru</authorUrl>
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<description>Plugin for JComments to support user avatars from Vkontakte</description>
 	<files>
 		<filename plugin="vkavatar">vkavatar.php</filename>

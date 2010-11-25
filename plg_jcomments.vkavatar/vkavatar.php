@@ -57,9 +57,11 @@ class plgJCommentsVkAvatar extends JPlugin{
 		}
 		$users = array_unique($users);
 		if (count($users)) {
-			$query = 'SELECT userid, photo as avatar'
-				. ' FROM #__vklogin_users'
-				. ' WHERE userid in (' . implode(',', $users)  . ')'
+			$query = 'SELECT u.userid, u.photo as avatar, i.activation as vk_id'
+				. ' FROM #__vklogin_users as u,'
+				. ' #__users as i'
+				. ' WHERE u.userid in (' . implode(',', $users)  . ')'
+				. ' AND u.userid=i.id'
 				;
 			$db = JFactory::getDBO();
 			$db->setQuery($query);
@@ -70,8 +72,8 @@ class plgJCommentsVkAvatar extends JPlugin{
 		}
 		for ($i=0,$n=count($comments); $i < $n; $i++) {
 			$userid = (int) $comments[$i]->userid;
-			if (isset($avatars[$userid]) && $avatars[$userid]->avatar != '') {
-				$comments[$i]->avatar =  '<img src="'.$avatars[$userid]->avatar.'" border="0" alt=""/><img align="bottom" style="width:16px;height:15px;margin-left:-16px;" src="'.JURI::root().'administrator/components/com_vklogin/img/vk.png" />';
+			if (isset($avatars[$userid]) && $avatars[$userid]->avatar != '' && $avatars[$userid]->vk_id != '') {
+				$comments[$i]->avatar =  '<a href="http://vkontakte.ru/id'.$avatars[$userid]->vk_id.'"><img src="'.$avatars[$userid]->avatar.'" border="0" alt=""/><img align="bottom" style="width:16px;height:15px;margin-left:-16px;" src="'.JURI::root().'administrator/components/com_vklogin/img/vk.png" /></a>';
 			} else {
 				$comments[$i]->avatar = '';
 			}
