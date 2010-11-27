@@ -5,8 +5,8 @@
 		<param name="secret" type="text" default="" label="Защищенный ключ" description="Защищенный ключ"/>
 		<param name="jomsocial" type="radio" default="0" label="Social Integration" description="Social Integration">
 			<option value="0">No</option>
-			<option value="1">JS</option>
-			<option value="2">CB</option>
+			<option value="1">JomSocial</option>
+			<option value="2">Community Builder</option>
 		</param>
 		<param name="useractivation" type="hidden" default="0"/>
  </params>

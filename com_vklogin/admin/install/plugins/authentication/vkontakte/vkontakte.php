@@ -29,14 +29,14 @@ class plgAuthenticationVkontakte extends JPlugin
 					.'mid='.$session->get('mid', 'error')
 					.'secret='.$session->get('secret', 'error')
 					.'sid='.$session->get('sid', 'error')
-					.$vkConfig->get('secret')) == $session->get('sig', 'error'))
+					.trim($vkConfig->get('secret'))) == $session->get('sig', 'error'))
 			{
 				$db = &JFactory::getDBO();
 				$db->setQuery('SELECT * FROM #__users WHERE activation='.$db->Quote($session->get('mid', 'error')));
 				if ($row = $db->loadObject())
 				{
 					$photo = $session->get('vk_photo','');
-					if (preg_match('#http://cs\d+\.vkontakte\.ru/u\d+/c_[a-z0-9]+\.jpg|http://vkontakte\.ru/images/question_c\.gif#',$photo)){
+					if (preg_match('#http://cs\d+\.vkontakte\.ru/u\d+/e_[a-z0-9]+\.jpg|http://vkontakte\.ru/images/question_e\.gif#',$photo)){
 						$db->setQuery('INSERT INTO #__vklogin_users (userid, photo) VALUES ('.$db->Quote($row->id).', '.$db->Quote($photo).')'.
 							' ON DUPLICATE KEY UPDATE `photo`= VALUES(`photo`)');
 						$db->query();

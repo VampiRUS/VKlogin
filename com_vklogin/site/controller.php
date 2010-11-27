@@ -22,7 +22,9 @@ class VkloginController extends JController
 		$session->set('secret',$vk_cookie['secret']);
 		$session->set('sid',$vk_cookie['sid']);
 		$session->set('sig',$vk_cookie['sig']);
-		$session->set('vk_photo',JRequest::getString('photo', '', 'post'));
+		if (!$session->get('vk_photo')){
+			$session->set('vk_photo',JRequest::getString('photo_rec', '', 'post'));
+		}
 		$db = &JFactory::getDBO();
 		$db->setQuery('SELECT id FROM #__users WHERE activation='.$db->Quote($vk_cookie['mid']));
 		$db->query();
@@ -123,11 +125,6 @@ class VkloginController extends JController
 		}
 	}
 	
-	function reciver()
-	{
-		JRequest::setVar('view', 'reciver');
-		parent::display();
-	}
 	
 	/**
 	 * Prepares the registration form

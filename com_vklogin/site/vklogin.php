@@ -13,7 +13,6 @@ $task = JRequest::getVar('task', null, 'default', 'cmd');
 
 switch ($task) {
 	case 'connect': $task = 'connect';break;
-	case 'reciver': $task = 'reciver';break;
 	default: $task = 'default';
 }
 $controller->execute($task);

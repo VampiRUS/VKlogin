@@ -59,7 +59,7 @@ class plgUserVKuser extends JPlugin {
 	function onLogoutUser($user)
 	{
 		$vkConfig = &JComponentHelper::getParams( 'com_vklogin' );
-		$appid = $vkConfig->get( 'appid' );
+		$appid = trim($vkConfig->get( 'appid' ));
 		setcookie ('vk_app_'.$appid, "", time() - 3600);
 		unset($_COOKIE['vk_app_'.$appid]); 
 		return true;

@@ -2,13 +2,13 @@
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <install type="component" version="1.5.0" method="upgrade">
  <name>VKLogin</name>
- <creationDate>19.09.2010</creationDate>
+ <creationDate>27.11.2010</creationDate>
  <author>VampiRUS</author>
  <authorEmail>vamp1rus@yandex.ru</authorEmail>
  <authorUrl>http://vampirus.ru</authorUrl>
  <copyright>vampirus.ru</copyright>
  <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
- <version>0.0.7</version>
+ <version>0.0.8</version>
  <description>Компонент для авторизации пользователей на сайте при помощи OPEN API Vkontakte</description> 
  <installfile>install.vklogin.php</installfile>
  <uninstallfile>uninstall.vklogin.php</uninstallfile>
@@ -22,10 +22,6 @@
   <filename>views/register/index.html</filename>
   <filename>views/register/tmpl/default.php</filename>
   <filename>views/register/tmpl/index.html</filename>
-  <filename>views/reciver/view.html.php</filename>
-  <filename>views/reciver/index.html</filename>
-  <filename>views/reciver/tmpl/default.php</filename>
-  <filename>views/reciver/tmpl/index.html</filename>
 </files>
 <languages>
 	<language tag="ru-RU">site/languages/ru-RU.com_vklogin.ini</language>

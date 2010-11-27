@@ -21,13 +21,19 @@ $params->def('greeting', 1);
 $type 	= modVKLoginHelper::getType();
 $return	= modVKLoginHelper::getReturnURL($params, $type);
 $vkConfig = &JComponentHelper::getParams( 'com_vklogin' );
-$appid = $vkConfig->get( 'appid' );
-$reciver = JRoute::_("index.php?option=com_vklogin&task=reciver&view=reciver", false);
+$appid = trim($vkConfig->get( 'appid' ));
 $social = $vkConfig->get( 'jomsocial' );
 
 $lang->load('mod_login');
 
 $user =& JFactory::getUser();
+if ($user->id){
+	$db = JFactory::getDBO();
+	$db->setQuery('SELECT photo FROM #__vklogin_users WHERE userid='.$user->id);
+	$user_photo = $db->loadResult();
+} else {
+	$user_photo = '';
+}
 switch ($social) {
 	case 2:
 		$remindlink = JRoute::_( 'index.php?option=com_comprofiler&task=lostpassword' );
@@ -47,7 +53,7 @@ switch ($social) {
 if (!defined('VKAPI')){
 	define('VKAPI',1);
 	$doc =& JFactory::getDocument();
-	$doc->addCustomTag("<script src='http://vkontakte.ru/js/api/openapi.js' type='text/javascript' charset='windows-1251'></script>");
+	$doc->addCustomTag("<script src='http://userapi.com/js/api/openapi.js?18' type='text/javascript' charset='windows-1251'></script>");
 }
 
 require(JModuleHelper::getLayoutPath('mod_vklogin'));
