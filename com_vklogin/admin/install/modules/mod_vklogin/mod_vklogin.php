@@ -50,7 +50,7 @@ switch ($social) {
 		$resetlink = JRoute::_( 'index.php?option=com_user&view=reset' );
 		$registerlink = JRoute::_( 'index.php?option=com_user&view=register' );
 }
-if (!defined('VKAPI')){
+if (!defined('VKAPI') && $type != 'logout'){
 	define('VKAPI',1);
 	$doc =& JFactory::getDocument();
 	$doc->addCustomTag("<script src='http://userapi.com/js/api/openapi.js?18' type='text/javascript' charset='windows-1251'></script>");
