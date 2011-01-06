@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
-<install type="component" version="1.5.0" method="upgrade">
- <name>VKLogin</name>
- <creationDate>27.11.2010</creationDate>
- <author>VampiRUS</author>
- <authorEmail>vamp1rus@yandex.ru</authorEmail>
- <authorUrl>http://vampirus.ru</authorUrl>
- <copyright>vampirus.ru</copyright>
- <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
- <version>0.0.8</version>
- <description>Компонент для авторизации пользователей на сайте при помощи OPEN API Vkontakte</description> 
- <installfile>install.vklogin.php</installfile>
- <uninstallfile>uninstall.vklogin.php</uninstallfile>
-<files folder="site">
-  <filename>vklogin.php</filename>
-  <filename>controller.php</filename>
-  <filename>core.php</filename>
-  <filename>index.html</filename>
-  <filename>views/index.html</filename>
-  <filename>views/register/view.html.php</filename>
-  <filename>views/register/index.html</filename>
-  <filename>views/register/tmpl/default.php</filename>
-  <filename>views/register/tmpl/index.html</filename>
-</files>
-<languages>
-	<language tag="ru-RU">site/languages/ru-RU.com_vklogin.ini</language>
-	<language tag="en-GB">site/languages/en-GB.com_vklogin.ini</language>
-	<language tag="ru-RU">site/languages/ru-RU.mod_vklogin.ini</language>
-	<language tag="en-GB">site/languages/en-GB.mod_vklogin.ini</language>
-</languages>
-<install>
-	<sql>
-		<file charset="utf8" driver="mysql">install.sql</file>
-	</sql>
-</install>
-<uninstall>
-	<sql>
-		<file charset="utf8" driver="mysql">uninstall.sql</file>
-	</sql>
-</uninstall>
-<administration>
+<extension type="component" version="1.6.0" method="upgrade">
+	<name>COM_VKLOGIN</name>
+	<creationDate>December 2010</creationDate>
+	<author>VampiRUS</author>
+	<authorEmail>vamp1rus@yandex.ru</authorEmail>
+	<authorUrl>http://vampirus.ru</authorUrl>
+	<copyright>vampirus.ru</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<version>0.0.9</version>
+	<description>COM_VKLOGIN_DESC</description> 
+	<scriptfile>script.php</scriptfile>
+	<files folder="site">
+		<filename>vklogin.php</filename>
+		<filename>controller.php</filename>
+		<filename>core.php</filename>
+		<filename>index.html</filename>
+		<filename>views/index.html</filename>
+		<filename>views/register/view.html.php</filename>
+		<filename>views/register/index.html</filename>
+		<filename>views/register/tmpl/default.php</filename>
+		<filename>views/register/tmpl/register16.php</filename>
+		<filename>views/register/tmpl/index.html</filename>
+		<folder>models</folder>
+	</files>
+	<languages>
+		<language tag="ru-RU">site/languages/ru-RU.com_vklogin.ini</language>
+		<language tag="en-GB">site/languages/en-GB.com_vklogin.ini</language>
+		<language tag="ru-RU">site/languages/ru-RU.mod_vklogin.ini</language>
+		<language tag="en-GB">site/languages/en-GB.mod_vklogin.ini</language>
+		<language tag="ru-RU">site/languages/ru-RU.mod_vklogin.sys.ini</language>
+		<language tag="en-GB">site/languages/en-GB.mod_vklogin.sys.ini</language>
+	</languages>
+	<install>
+		<sql>
+			<file charset="utf8" driver="mysql">install.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file charset="utf8" driver="mysql">uninstall.sql</file>
+		</sql>
+	</uninstall>
+	<administration>
 		<menu img="components/com_vklogin/img/vk.png" link="option=com_vklogin"><![CDATA[VKlogin]]></menu>
 		<files folder="admin">
 			<filename>index.html</filename>
@@ -55,7 +57,9 @@
 		<languages>
 			<language tag="ru-RU">admin/languages/ru-RU.com_vklogin.ini</language>
 			<language tag="en-GB">admin/languages/en-GB.com_vklogin.ini</language>
+			<language tag="ru-RU">admin/languages/ru-RU.com_vklogin.sys.ini</language>
+			<language tag="en-GB">admin/languages/en-GB.com_vklogin.sys.ini</language>
 		</languages>
-</administration>
-</install>
+	</administration>
+</extension>
 

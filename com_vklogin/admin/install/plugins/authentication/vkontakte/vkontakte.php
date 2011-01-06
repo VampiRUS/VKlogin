@@ -6,12 +6,13 @@ jimport( 'joomla.plugin.plugin' );
 
 class plgAuthenticationVkontakte extends JPlugin
 {
-	function plgAuthenticationVkontakte(& $subject, $config)
+	
+	public function onUserAuthenticate($credentials, $options, &$response)
 	{
-		parent::__construct($subject, $config);
+		$this->onAuthenticate( $credentials, $options, $response );
 	}
 	
-	function onAuthenticate( $credentials, $options, &$response )
+	public function onAuthenticate( $credentials, $options, &$response )
 	{
 		/*
 		 * Here you would do whatever you need for an authentication routine with the credentials

@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 
 class modVKLoginHelper
 {
-	function getReturnURL($params, $type)
+	public function getReturnURL($params, $type)
 	{
 		if($itemid =  $params->get($type))
 		{
@@ -32,7 +32,7 @@ class modVKLoginHelper
 		return base64_encode($url);
 	}
 
-	function getType()
+	public function getType()
 	{
 		$user = & JFactory::getUser();
 		return (!$user->get('guest')) ? 'logout' : 'login';

@@ -1,6 +1,6 @@
 <?php 
 class VKlogin{
-	function check_cookie(&$vk_cookie){
+	static function check_cookie(&$vk_cookie){
 		$mainframe	=& JFactory::getApplication();
 		$vkConfig = &JComponentHelper::getParams( 'com_vklogin' );
 		$appid = trim($vkConfig->get( 'appid' ));

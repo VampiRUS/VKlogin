@@ -121,20 +121,20 @@ endif; ?>
 <form action="<?php echo JRoute::_( 'index.php', true, $params->get('usesecure')); ?>" method="post" name="login" id="form-login" >
 	<fieldset class="input">
 	<p id="form-login-username">
-		<label for="modlgn_username"><?php echo JText::_('Username') ?></label><br />
+		<label for="modlgn_username"><?php echo JText::_('MOD_VKLOGIN_USERNAME') ?></label><br />
 		<input id="modlgn_username" type="text" name="username" class="inputbox" alt="username" size="18" />
 	</p>
 	<p id="form-login-password">
-		<label for="modlgn_passwd"><?php echo JText::_('Password') ?></label><br />
+		<label for="modlgn_passwd"><?php echo JText::_('MOD_VKLOGIN_PASSWORD') ?></label><br />
 		<input id="modlgn_passwd" type="password" name="passwd" class="inputbox" size="18" alt="password" />
 	</p>
 	<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>
 	<p id="form-login-remember">
-		<label for="modlgn_remember"><?php echo JText::_('Remember me') ?></label>
+		<label for="modlgn_remember"><?php echo JText::_('MOD_VKLOGIN_REMEMBER_ME') ?></label>
 		<input id="modlgn_remember" type="checkbox" name="remember" class="inputbox" value="yes" alt="Remember Me" />
 	</p>
 	<?php endif; ?>
-	<input type="submit" name="Submit" class="button" value="<?php echo JText::_('LOGIN') ?>" />
+	<input type="submit" name="Submit" class="button" value="<?php echo JText::_('MOD_VKLOGIN_BUTTON_LOGIN') ?>" />
 	</fieldset>
 	<input type="hidden" name="option" value="com_user" />
 	<input type="hidden" name="task" value="login" />
@@ -181,18 +181,18 @@ endif; ?>
 	<ul>
 		<li>
 			<a href="<?php echo $resetlink ?>">
-			<?php echo JText::_('FORGOT_YOUR_PASSWORD'); ?></a>
+			<?php echo JText::_('MOD_VKLOGIN_FORGOT_YOUR_PASSWORD'); ?></a>
 		</li>
 		<li>
 			<a href="<?php echo $remindlink ?>">
-			<?php echo JText::_('FORGOT_YOUR_USERNAME'); ?></a>
+			<?php echo JText::_('MOD_VKLOGIN_FORGOT_YOUR_USERNAME'); ?></a>
 		</li>
 		<?php
 		$usersConfig = &JComponentHelper::getParams( 'com_users' );
 		if ($usersConfig->get('allowUserRegistration')) : ?>
 		<li>
 			<a href="<?php echo $registerlink ?>">
-				<?php echo JText::_('REGISTER'); ?></a>
+				<?php echo JText::_('MOD_VKLOGIN_REGISTER'); ?></a>
 		</li>
 		<?php endif; ?>
 	</ul>
@@ -210,12 +210,12 @@ if (count($name)>1){
 	if ($user_photo){
 		echo '<img src="'.$user_photo.'" align="left"/>';
 	}
-	echo JText::sprintf( 'HINAME', $name );
+	echo JText::sprintf( 'MOD_VKLOGIN_HINAME', $name );
 endif; ?>
 <form method="post" action="<?php echo JRoute::_('index.php')?>" name="vklogin">
-	<input type="submit" name="Submit" class="button" value="<?php echo JText::_( 'BUTTON_LOGOUT'); ?>" />
-	<input type="hidden" value="com_user" name="option">
-	<input type="hidden" value="logout" name="task">
+	<input type="submit" name="Submit" class="button" value="<?php echo JText::_( 'MOD_VKLOGIN_BUTTON_LOGOUT'); ?>" />
+	<input type="hidden" value="com_user<?php echo (($jVersion=='1.6')?'s':'');?>" name="option">
+	<input type="hidden" value="<?php echo (($jVersion=='1.6')?'user.':'');?>logout" name="task">
 	<input type="hidden" name="return" value="<?php echo $return; ?>" />
 </form>
 <?php endif; ?>

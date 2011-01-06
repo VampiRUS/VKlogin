@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install version="1.5" type="plugin"  group="authentication">
+<extension version="1.6" type="plugin"  group="authentication">
 	<name>Authentication - Vkontakte</name>
 	<author>VampiRUS</author>
 	<creationDate>06.06.2010</creationDate>
 	<copyright>VampiRUS</copyright>
-	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>vamp1rus@yandex.ru</authorEmail>
 	<authorUrl>vampirus.ru</authorUrl>
 	<version>0.0.5</version>
@@ -12,5 +12,4 @@
 	<files>
 		<filename plugin="vkontakte">vkontakte.php</filename>
 	</files>
-	<params />
-</install>
+</extension>

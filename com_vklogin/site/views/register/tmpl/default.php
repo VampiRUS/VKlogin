@@ -1,5 +1,7 @@
 <?php // no direct access
-defined('_JEXEC') or die('Restricted access'); ?>
+defined('_JEXEC') or die('Restricted access');
+JHTML::_('behavior.formvalidation');
+?>
 
 <?php
 	if(isset($this->message)){
@@ -23,7 +25,7 @@ function showbox(){
 <tr>
 	<td width="30%" height="40">
 		<label id="namemsg" for="name">
-			<?php echo JText::_( 'Name' ); ?>:
+			<?php echo JText::_( 'COM_VKLOGIN_NAME' ); ?>:
 		</label>
 	</td>
   	<td>
@@ -33,7 +35,7 @@ function showbox(){
 <tr>
 	<td height="40">
 		<label id="usernamemsg" for="username">
-			<?php echo JText::_( 'User name' ); ?>:
+			<?php echo JText::_( 'COM_VKLOGIN_USERNAME' ); ?>:
 		</label>
 	</td>
 	<td>
@@ -43,7 +45,7 @@ function showbox(){
 <tr>
 	<td height="40">
 		<label id="emailmsg" for="email">
-			<?php echo JText::_( 'Email' ); ?>:
+			<?php echo JText::_( 'COM_VKLOGIN_EMAIL' ); ?>:
 		</label>
 	</td>
 	<td>
@@ -51,17 +53,17 @@ function showbox(){
 	</td>
 </tr>
 </table>
-	<button class="button validate" type="submit"><?php echo JText::_('Register'); ?></button>
+	<button class="button validate" type="submit"><?php echo JText::_('COM_VKLOGIN_REGISTER'); ?></button>
 	<?php echo JHTML::_( 'form.token' ); ?>
 </form>
-<a href="#" onclick="return showbox()"><?php echo JText::_('I\'m already registred');?></a>
+<a href="#" onclick="return showbox()"><?php echo JText::_('COM_VKLOGIN_I\'M_ALREADY_REGISTRED');?></a>
 <div id="addition_form" style="display:none;">
 <form action="<?php echo JRoute::_( 'index.php?option=com_vklogin' ); ?>" method="post" class="form-validate">
 <table cellpadding="0" cellspacing="0" border="0" width="100%" class="contentpane">
 <tr>
 	<td width="30%" height="40">
 		<label id="usermsg" for="user">
-			<?php echo JText::_( 'Site User Name' ); ?>:
+			<?php echo JText::_( 'COM_VKLOGIN_SITE_USER_NAME' ); ?>:
 		</label>
 	</td>
   	<td>
@@ -71,7 +73,7 @@ function showbox(){
 <tr>
 	<td width="30%" height="40">
 		<label id="passwordmsg" for="password">
-			<?php echo JText::_( 'Site Password' ); ?>:
+			<?php echo JText::_( 'COM_VKLOGIN_SITE_PASSWORD' ); ?>:
 		</label>
 	</td>
   	<td>
@@ -79,7 +81,7 @@ function showbox(){
   	</td>
 </tr>
 </table>
-<button class="button validate" type="submit"><?php echo JText::_('Merge'); ?></button>
+<button class="button validate" type="submit"><?php echo JText::_('COM_VKLOGIN_MERGE'); ?></button>
 <input type="hidden" name="task" value="connect"/>
 </form>
 </div>

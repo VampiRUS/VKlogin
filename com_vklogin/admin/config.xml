@@ -9,5 +9,15 @@
 			<option value="2">Community Builder</option>
 		</param>
 		<param name="useractivation" type="hidden" default="0"/>
- </params>
+	</params>
+	<fieldset name="BASIC">
+		<field name="appid" type="text" default="" label="COM_VKLOGIN_APPID" description="COM_VKLOGIN_APPID_DESC"/>
+		<field name="secret" type="text" default="" label="COM_VKLOGIN_POTECTED_KEY" description="COM_VKLOGIN_POTECTED_KEY_DESC"/>
+		<field name="jomsocial" type="radio" default="0" label="COM_VKLOGIN_SOCIAL_INTEGRATION" description="COM_VKLOGIN_SOCIAL_INTEGRATION_DESC">
+			<option value="0">JNO</option>
+			<option value="1">JomSocial</option>
+			<option value="2">Community Builder</option>
+		</field>
+		<field name="useractivation" type="hidden" default="0"/>
+	</fieldset>
 </config>

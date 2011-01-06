@@ -1,12 +1,12 @@
 <?php
 defined( '_JEXEC' ) or die( 'Restricted access' );
 class HTML_vklogin{
-	function showFields($fields){
+	static function showFields($fields){
 		$count = 0;
 		?>
-		<form action="index.php" method="post" name="adminForm">
+		<form action="index.php" method="post" name="adminForm" id="adminForm">
 		<div style="width:20%;float:right;">
-		<div style="padding:4px;font-weight:bold;background:none repeat scroll 0 0 #F0F0F0;border-bottom:1px solid #999999;border-left:1px solid #FFFFFF;color:#666666;text-align:center;"><?php echo JText::_('Available fields');?></div>
+		<div style="padding:4px;font-weight:bold;background:none repeat scroll 0 0 #F0F0F0;border-bottom:1px solid #999999;border-left:1px solid #FFFFFF;color:#666666;text-align:center;"><?php echo JText::_('COM_VKLOGIN_AVAILABLE_FIELDS');?></div>
 		<span>uid</span><br/>
 		<span>first_name</span><br/>
 		<span>last_name</span><br/>
@@ -28,8 +28,8 @@ class HTML_vklogin{
 		<table class="adminlist" style="width:80%" cellspacing="1">
 			<thead>
 				<tr>
-					<th><?php echo JText::_('JomSocial field');?></th>
-					<th><?php echo JText::_('VKontakte field');?></th>
+					<th><?php echo JText::_('COM_VKLOGIN_JOMSOCIAL_FIELD');?></th>
+					<th><?php echo JText::_('COM_VKLOGIN_VKONTAKTE_FIELD');?></th>
 				</tr>
 			</thead>
 		<?php
@@ -57,8 +57,6 @@ class HTML_vklogin{
 		</form>
 		<?php
 	}
-	
-	
 }
 
 ?>

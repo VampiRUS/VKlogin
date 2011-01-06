@@ -9,12 +9,25 @@ include_once(dirname(__FILE__).DS.'core.php');
 
 class VkloginController extends JController
 {
-	function display()
+	private $jVersion = '1.5';
+	
+	public function __construct($config = array())
+	{
+		$version = new JVersion;
+		$joomla = $version->getShortVersion();
+		if(substr($joomla,0,3) == '1.6'){
+			$this->jVersion = '1.6';
+		}
+		parent::__construct($config);
+	}
+	
+	public function display()
 	{
 		$mainframe	=& JFactory::getApplication();
 		if (!VKlogin::check_cookie($vk_cookie)){
 			JError::raiseError( 403, JText::_( 'Cookie error' ));
 		}
+
 		$user = &JFactory::getUser();
 		$session =& JFactory::getSession();
 		$session->set('mid',$vk_cookie['mid']);
@@ -39,21 +52,31 @@ class VkloginController extends JController
 				JError::raiseError( 403, JText::_( 'Registration not allowed' ));
 				return;
 			}
-			$username = JRequest::getString('username', '', 'post');
-			$name = JRequest::getString('name', '', 'post');
-			$email = JRequest::getString('email', '', 'post');
-			$user 		= clone(JFactory::getUser());
-			$authorize	=& JFactory::getACL();
-			$newUsertype = $usersConfig->get( 'new_usertype' );
-			if (!$newUsertype) {
-				$newUsertype = 'Registered';
+			//joomla 1.6. form
+			$requestData = JRequest::getVar('jform', array(), 'post', 'array');
+			$username = JRequest::getString('username', $requestData['username'], 'post');
+			$name = JRequest::getString('name', $requestData['name'], 'post');
+			$email = JRequest::getString('email', $requestData['email'], 'post');
+			if($this->jVersion == '1.6'){
+				JUser::getTable('User', 'JTable');
+				$user = new JUser();
+			} else {
+				$user 	= clone(JFactory::getUser());
 			}
+			$authorize	=& JFactory::getACL();
 			$data = array(
 				'username'	=> $username,
 				'name'		=> $name,
 				'email'		=> $email,
 				'activation'=> $vk_cookie['mid']
 			);
+			if($this->jVersion != '1.6'){
+				$newUsertype = $usersConfig->get( 'new_usertype', 'Registered');
+			} else {
+				$newUsertype = $usersConfig->get( 'new_usertype', 2);
+				$data['groups'][$newUsertype] = null;
+				$mainframe->setUserState('com_vklogin.registration.data', $data);
+			}
 			$vkConfig = &JComponentHelper::getParams( 'com_vklogin' );
 			if ($vkConfig->get( 'jomsocial' )){
 				//если jomsocial
@@ -69,9 +92,11 @@ class VkloginController extends JController
 			if (!$user->bind( $data, 'usertype' )) {
 				JError::raiseError( 500, $user->getError());
 			}
-			$user->set('usertype', $newUsertype);
-			$user->set('gid', $authorize->get_group_id( '', $newUsertype, 'ARO' ));
-					// If there was an error with registration, set the message and display form
+			if($this->jVersion != '1.6'){
+				$user->set('usertype', $newUsertype);
+				$user->set('gid', $authorize->get_group_id( '', $newUsertype, 'ARO' ));
+			}
+			// If there was an error with registration, set the message and display form
 			if ( !$user->save() )
 			{
 				JError::raiseWarning('', JText::_( $user->getError()));
@@ -84,22 +109,30 @@ class VkloginController extends JController
 		}
 	}	
 	
-	function connect()
+	public function connect()
 	{
-		global $mainframe;
+		$mainframe	=& JFactory::getApplication();
 		$db =& JFactory::getDBO();
 		if(!VKlogin::check_cookie($vk_cookie)){
 			JError::raiseError( 403, JText::_( 'Cookie error' ));
 		}
 		$username =  JRequest::getString('username', '', 'post');
 		$password = JRequest::getString('password', '', 'post');
-		$query = 'SELECT `id`, `password`, `block`,`usertype`'
-			. ' FROM `#__users`'
+		$query = 'SELECT u.`id`, u.`password`, u.`block`,u.`usertype`'
+			.(($this->jVersion == '1.6')?' ,g.`group_id`':'')
+			. ' FROM `#__users` as u'
+			.(($this->jVersion == '1.6')?' JOIN `#__user_usergroup_map as g`':'')
 			. ' WHERE username=' . $db->Quote($username)
+			.(($this->jVersion == '1.6')?' AND u.id=g.user_id':'')
 			;
 		$db->setQuery( $query );
 		$result = $db->loadObject();
-		if($result && $result->usertype != 'Super Administrator' && !$result->block)
+		if ( $this->jVersion == '1.6'){
+			$checkType = !JAccess::checkGroup($result['group_id'], 'core.admin');
+		} else {
+			$checkType = true;
+		}
+		if($result && $result->usertype != 'Super Administrator' && !$result->block && $checkType)
 		{
 			$parts	= explode( ':', $result->password );
 			$crypt	= $parts[0];
@@ -110,10 +143,10 @@ class VkloginController extends JController
 				$db->query();
 				$error = $mainframe->login(array('username'=>$username, 'password'=>$password), array());
 				if(!JError::isError($error))
-				{
-					$mainframe->redirect( JRoute::_('index.php?option=com_user') );
+				{	
+					$mainframe->redirect( JRoute::_('index.php?option=com_user'.(($this->jVersion == '1.6')?'s':'')) );
 				} else {
-					$mainframe->redirect( JRoute::_('index.php?option=com_user&view=login', false ));
+					$mainframe->redirect( JRoute::_('index.php?option=com_user'.(($this->jVersion == '1.6')?'s':'').'&view=login', false ));
 				}
 			} else {
 				JError::raiseWarning('', JText::_('Invalid password'));
@@ -130,23 +163,35 @@ class VkloginController extends JController
 	 * Prepares the registration form
 	 * @return void
 	 */
-	function register()
+	protected function register()
 	{
-		global $mainframe;
+		$mainframe	=& JFactory::getApplication();
 		$user 	=& JFactory::getUser();
 
 		if ( $user->get('guest')) {
-			JRequest::setVar('view', 'register');
+			if($this->jVersion != '1.6'){
+				JRequest::setVar('view', 'register');
+				parent::display();
+			} else {
+				$document	= JFactory::getDocument();
+				// Set the default view name and format from the Request.
+				$vFormat = $document->getType();
+				$view = $this->getView('register', $vFormat);
+				$model = $this->getModel('Registration');
+				$view->setModel($model, true);
+				$view->setLayout('register16');
+				// Push document object into the view.
+				$view->assignRef('document', $document);
+				$view->display();
+			}
 		} else {
-			$mainframe->redirect(JRoute::_('index.php?option=com_user&task=edit',false),JText::_('You are already registered.'));
+				$mainframe->redirect(JRoute::_('index.php?option=com_user'.(($this->jVersion == '1.6')?'s':'').'&task=edit',false),JText::_('You are already registered.'));
 		}
-
-		parent::display();
 	}
 	
-	function login()
+	protected function login()
 	{
-		global $mainframe;
+		$mainframe	=& JFactory::getApplication();
 
 		if ($return = JRequest::getVar('return', '', 'method', 'base64')) {
 			$return = base64_decode($return);
@@ -169,7 +214,7 @@ class VkloginController extends JController
 		{
 			// Redirect if the return url is not registration or login
 			if ( ! $return ) {
-				$return	= JRoute::_('index.php?option=com_user');
+					$return	= JRoute::_('index.php?option=com_user'.(($this->jVersion == '1.6')?'s':''));
 			}
 
 			$mainframe->redirect( $return );
@@ -178,7 +223,7 @@ class VkloginController extends JController
 		{
 			// Facilitate third party login forms
 			if ( ! $return ) {
-				$return	= JRoute::_('index.php?option=com_user&view=login', false);
+				$return	= JRoute::_('index.php?option=com_user'.(($this->jVersion == '1.6')?'s':'').'&view=login', false);
 			}
 
 			// Redirect to a login form

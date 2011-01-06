@@ -9,20 +9,22 @@ if ($task == 'postinstall'){
 	include_once(dirname(__FILE__).'/install/helper.php');
 	$errors = array();
 	if (!VkloginInstallHelper::installPlugin('Authentication - Vkontakte', 'vkontakte', 'authentication')){
-		$errors[] = JText::_('Authentication - Vkontakte plugin installation error');
+		$errors[] = JText::_('COM_VKLOGIN_AUTH_PLUGIN_INSTALLATION_ERROR');
 	}
 	if (!VkloginInstallHelper::installPlugin('User - Vkontakte', 'vkuser', 'user')){
-		$errors[] = JText::_('User - Vkontakte plugin installation error');
+		$errors[] = JText::_('COM_VKLOGIN_USER_PLUGIN_INSTALLATION_ERROR');
 	}
 	if (!VkloginInstallHelper::installModule('Войти ВКонтакте','mod_vklogin')){
-		$errors[] = JText::_('mod_vklogin module installation error');
+		$errors[] = JText::_('COM_VKLOGIN_MOD_VKLOGIN_MODULE_INSTALLATION_ERROR');
 	}
 	foreach ($errors as $error){
 		JError::raiseError( 500, $error);
 	}
-	if (empty($errors)){
+	$version = new JVersion;
+	$joomla = $version->getShortVersion();
+	if (empty($errors) && (substr($joomla,0,3) != '1.6')){
 		$mainframe = & JFactory::getApplication();
-		$mainframe->enqueueMessage(JText::_('The component was successfully installed'));
+		$mainframe->enqueueMessage(JText::_('COM_VKLOGIN_COMPONENT_WAS_SUCCESSFULLY_INSTALLED'));
 	}
 }
 if (file_exists($jspath.DS.'libraries'.DS.'core.php')){

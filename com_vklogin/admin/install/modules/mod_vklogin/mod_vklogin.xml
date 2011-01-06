@@ -1,51 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="module" version="1.5.0">
-	<name>VKLogin</name>
+<extension
+	type="module"
+	version="1.6.0"
+	client="site"
+	method="upgrade">
+	<name>mod_vklogin</name>
 	<author>VampiRUS</author>
-	<creationDate>19.09.2010</creationDate>
+	<creationDate>02.01.2011</creationDate>
 	<copyright>vampirus.ru</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>vamp1rus@yandex.ru</authorEmail>
 	<authorUrl>vampirus.ru</authorUrl>
 	<version>0.0.7</version>
-	<description>Показывает стилизованную кнопку Войти ВКонтакте</description>
+	<description>MOD_VKLOGIN_DESC</description>
 	<files>
 		<filename module="mod_vklogin">mod_vklogin.php</filename>
 		<filename>index.html</filename>
-        <filename>helper.php</filename>
-        <filename>tmpl/default.php</filename>
-        <filename>tmpl/index.html</filename>
-        <filename>tmpl/vk.jpg</filename>
+		<filename>helper.php</filename>
+		<filename>tmpl/default.php</filename>
+		<filename>tmpl/index.html</filename>
+		<filename>tmpl/vk.jpg</filename>
 	</files>
-	<params>
-		<param name="login" type="list" default="0" label="если отсутствует логин" description="данные для формирования логина при отсутствии nickname у пользователя">
-			<option value="0">Пусто</option>
-			<option value="1">Фамилия</option>
-			<option value="2">Имя Фамилия</option>
-			<option value="3">Фамилия+uid</option>
-			<option value="4">Имя+uid</option>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+						name="login"
+						type="list"
+						default="0"
+						label="MOD_VKLOGIN_LOGIN_NOT_EXISTS"
+						description="MOD_VKLOGIN_LOGIN_NOT_EXISTS_DESC" 
+					>
+						<option value="0">MOD_VKLOGIN_EMPTY</option>
+						<option value="1">MOD_VKLOGIN_SECOND_NAME</option>
+						<option value="2">MOD_VKLOGIN_NAME_SECOND_NAME</option>
+						<option value="3">MOD_VKLOGIN_SECOND_NAME_UID</option>
+						<option value="4">MOD_VKLOGIN_NAME_UID</option>
+					</field>
+					<field 
+						name="widget"
+						type="radio"
+						default="1"
+						label="MOD_VKLOGIN_WIDGET"
+						description="MOD_VKLOGIN_WIDGET_DESC"
+					>
+						<option value="0">JNo</option>
+						<option value="1">JYes</option>
+					</field>
+					<field
+						name="standart_login"
+						type="radio"
+						default="1"
+						label="MOD_VKLOGIN_STANDART_FIELDS"
+						description="MOD_VKLOGIN_STANDART_FIELDS_DESC"
+					>
+						<option value="0">JNo</option>
+						<option value="1">JYes</option>
+					</field>
+			</fieldset>
+			<fieldset name="advanced">
+				<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="MOD_VKLOGIN_PARAMMODULECLASSSUFFIX" />
+				<field name="pretext" type="textarea" cols="30" rows="5" default="" label="Pre-text" description="MOD_VKLOGIN_PARAMPRETEXT" />
+				<field name="posttext" type="textarea" cols="30" rows="5" label="Post-text" description="MOD_VKLOGIN_PARAMPOSTTEXT" />
+				<field name="login" type="menuitem" default="" disable="separator" label="MOD_VKLOGIN_LOGIN_REDIRECTION_URL" description="MOD_VKLOGIN_PARAMLOGINREDIRECTURL" />
+				<field name="logout" type="menuitem" default="" disable="separator" label="MOD_VKLOGIN_LOGOUT_REDIRECTION_URL" description="MOD_VKLOGIN_PARAMLOGOUTREDIRECTURL" />
+				<field name="greeting" type="radio" default="1" label="MOD_VKLOGIN_Greeting" description="MOD_VKLOGIN_Show_Hide_the_simple_greeting_text">
+					<option value="0">JNo</option>
+					<option value="1">JYes</option>
+				</field>
+				<field name="usesecure" type="radio" default="0" label="Encrypt Login Form" description="MOD_VKLOGIN_Submit_encrypted_login_data_requires_SSL">
+					<option value="0">JNo</option>
+					<option value="1">JYes</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+		<params>
+		<param name="login" type="list" default="0" label="MOD_VKLOGIN_LOGIN_NOT_EXISTS" description="MOD_VKLOGIN_LOGIN_NOT_EXISTS_DESC">
+			<option value="0">MOD_VKLOGIN_EMPTY</option>
+			<option value="1">MOD_VKLOGIN_SECOND_NAME</option>
+			<option value="2">MOD_VKLOGIN_NAME_SECOND_NAME</option>
+			<option value="3">MOD_VKLOGIN_SECOND_NAME_UID</option>
+			<option value="4">MOD_VKLOGIN_NAME_UID</option>
 		</param>
-		<param name="widget" type="radio" default="1" label="Виджет" description="Использовать виджет для авторизации">
+		<param name="widget" type="radio" default="1" label="MOD_VKLOGIN_WIDGET" description="MOD_VKLOGIN_WIDGET_DESC">
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="standart_login" type="radio" default="1" label="Стандартные поля входа" description="Стандартные поля входа">
+		<param name="standart_login" type="radio" default="1" label="MOD_VKLOGIN_STANDART_FIELDS" description="MOD_VKLOGIN_STANDART_FIELDS_DESC">
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</param>
-		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
-		<param name="pretext" type="textarea" cols="30" rows="5" default="" label="Pre-text" description="PARAMPRETEXT" />
-		<param name="posttext" type="textarea" cols="30" rows="5" label="Post-text" description="PARAMPOSTTEXT" />
-		<param name="login" type="menuitem" default="" disable="separator" label="Login Redirection URL" description="PARAMLOGINREDIRECTURL" />
-		<param name="logout" type="menuitem" default="" disable="separator" label="Logout Redirection URL" description="PARAMLOGOUTREDIRECTURL" />
-		<param name="greeting" type="radio" default="1" label="Greeting" description="Show/Hide the simple greeting text">
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="MOD_VKLOGIN_PARAMMODULECLASSSUFFIX" />
+		<param name="pretext" type="textarea" cols="30" rows="5" default="" label="Pre-text" description="MOD_VKLOGIN_PARAMPRETEXT" />
+		<param name="posttext" type="textarea" cols="30" rows="5" label="Post-text" description="MOD_VKLOGIN_PARAMPOSTTEXT" />
+		<param name="login" type="menuitem" default="" disable="separator" label="MOD_VKLOGIN_LOGIN_REDIRECTION_URL" description="MOD_VKLOGIN_PARAMLOGINREDIRECTURL" />
+		<param name="logout" type="menuitem" default="" disable="separator" label="MOD_VKLOGIN_LOGOUT_REDIRECTION_URL" description="MOD_VKLOGIN_PARAMLOGOUTREDIRECTURL" />
+		<param name="greeting" type="radio" default="1" label="MOD_VKLOGIN_Greeting" description="MOD_VKLOGIN_Show_Hide_the_simple_greeting_text">
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</param>
-		<param name="usesecure" type="radio" default="0" label="Encrypt Login Form" description="Submit encrypted login data (requires SSL)">
+		<param name="usesecure" type="radio" default="0" label="Encrypt Login Form" description="MOD_VKLOGIN_Submit_encrypted_login_data_requires_SSL">
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</param>
 	</params>
-</install>
+</extension>

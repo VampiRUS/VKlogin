@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.6" type="plugin" group="user">
+<install version="1.5" type="plugin" group="user">
 	<name>User - Vkontakte</name>
 	<author>VampiRUS</author>
 	<creationDate>06.06.2010</creationDate>
@@ -12,4 +12,5 @@
 	<files>
 		<filename plugin="vkuser">vkuser.php</filename>
 	</files>
-</extension>
+	<params/>
+</install>

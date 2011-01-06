@@ -6,10 +6,13 @@ jimport( 'joomla.application.component.view');
 
 class VkloginViewRegister extends JView
 {
-
-	function display($tpl = null)
+	protected $form;
+	
+	
+	public function display($tpl = null)
 	{
-		global $mainframe;
+		$mainframe	=& JFactory::getApplication();
+		$this->form		= $this->get('Form');
 
 		// Check if registration is allowed
 		$usersConfig = &JComponentHelper::getParams( 'com_users' );
@@ -22,26 +25,12 @@ class VkloginViewRegister extends JView
 		$document =& JFactory::getDocument();
 		$params	= &$mainframe->getParams();
 
-	 	// Page Title
-		$menus	= &JSite::getMenu();
-		$menu	= $menus->getActive();
-
-		// because the application sets a default page title, we need to get it
-		// right from the menu item itself
-		if (is_object( $menu )) {
-			$menu_params = new JParameter( $menu->params );
-			if (!$menu_params->get( 'page_title')) {
-				$params->set('page_title',	JText::_( 'Registration' ));
-			}
-		} else {
-			$params->set('page_title',	JText::_( 'Registration' ));
-		}
+		$params->set('page_title',	JText::_( 'COM_VKLOGIN_REGISTRATION' ));
 		$document->setTitle( $params->get( 'page_title' ) );
 
-		$pathway->addItem( JText::_( 'New' ));
+		$pathway->addItem( JText::_( 'COM_VKLOGIN_NEW' ));
 
 		// Load the form validation behavior
-		JHTML::_('behavior.formvalidation');
 
 		$user =& JFactory::getUser();
 		$this->assignRef('user', $user);

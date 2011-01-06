@@ -34,6 +34,11 @@ if ($user->id){
 } else {
 	$user_photo = '';
 }
+$version = new JVersion;
+$joomla = $version->getShortVersion();
+if(substr($joomla,0,3) == '1.6'){
+	$jVersion = '1.6';
+}
 switch ($social) {
 	case 2:
 		$remindlink = JRoute::_( 'index.php?option=com_comprofiler&task=lostpassword' );
@@ -41,14 +46,14 @@ switch ($social) {
 		$registerlink = JRoute::_( 'index.php?option=com_comprofiler&task=registers' );
 		break;
 	case 1:
-		$remindlink = JRoute::_( 'index.php?option=com_user&view=remind' );
-		$resetlink = JRoute::_( 'index.php?option=com_user&view=reset' );
+		$remindlink = JRoute::_( 'index.php?option=com_user'.(($jVersion=='1.6')?'s':'').'&view=remind' );
+		$resetlink = JRoute::_( 'index.php?option=com_user'.(($jVersion=='1.6')?'s':'').'&view=reset' );
 		$registerlink = JRoute::_( 'index.php?option=com_community&view=register' );
 		break;
 	default:
-		$remindlink = JRoute::_( 'index.php?option=com_user&view=remind' );
-		$resetlink = JRoute::_( 'index.php?option=com_user&view=reset' );
-		$registerlink = JRoute::_( 'index.php?option=com_user&view=register' );
+		$remindlink = JRoute::_( 'index.php?option=com_user'.(($jVersion=='1.6')?'s':'').'&view=remind' );
+		$resetlink = JRoute::_( 'index.php?option=com_user'.(($jVersion=='1.6')?'s':'').'&view=reset' );
+		$registerlink = JRoute::_( 'index.php?option=com_user'.(($jVersion=='1.6')?'s&view=registration':'&view=register'));
 }
 if (!defined('VKAPI') && $type != 'logout'){
 	define('VKAPI',1);

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
+<install type="component" version="1.5.0" method="upgrade">
+ <name>VKLogin</name>
+ <creationDate>27.11.2010</creationDate>
+ <author>VampiRUS</author>
+ <authorEmail>vamp1rus@yandex.ru</authorEmail>
+ <authorUrl>http://vampirus.ru</authorUrl>
+ <copyright>vampirus.ru</copyright>
+ <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+ <version>0.0.9</version>
+ <description>Компонент для авторизации пользователей на сайте при помощи OPEN API Vkontakte</description> 
+ <installfile>install.vklogin.php</installfile>
+ <uninstallfile>uninstall.vklogin.php</uninstallfile>
+<files folder="site">
+  <filename>vklogin.php</filename>
+  <filename>controller.php</filename>
+  <filename>core.php</filename>
+  <filename>index.html</filename>
+  <filename>views/index.html</filename>
+  <filename>views/register/view.html.php</filename>
+  <filename>views/register/index.html</filename>
+  <filename>views/register/tmpl/default.php</filename>
+  <filename>views/register/tmpl/index.html</filename>
+</files>
+<languages>
+	<language tag="ru-RU">site/languages/ru-RU.com_vklogin.ini</language>
+	<language tag="en-GB">site/languages/en-GB.com_vklogin.ini</language>
+	<language tag="ru-RU">site/languages/ru-RU.mod_vklogin.ini</language>
+	<language tag="en-GB">site/languages/en-GB.mod_vklogin.ini</language>
+</languages>
+<install>
+	<sql>
+		<file charset="utf8" driver="mysql">install.sql</file>
+	</sql>
+</install>
+<uninstall>
+	<sql>
+		<file charset="utf8" driver="mysql">uninstall.sql</file>
+	</sql>
+</uninstall>
+<administration>
+		<menu img="components/com_vklogin/img/vk.png" link="option=com_vklogin"><![CDATA[VKlogin]]></menu>
+		<files folder="admin">
+			<filename>index.html</filename>
+			<filename>config.xml</filename>
+			<filename>admin.vklogin.php</filename>
+			<filename>admin.vklogin.html.php</filename>
+			<filename>install.sql</filename>
+			<filename>uninstall.sql</filename>
+			<filename>img/index.html</filename>
+			<filename>img/vk.png</filename>
+			<folder>install</folder>
+		</files>
+		<languages>
+			<language tag="ru-RU">admin/languages/ru-RU.com_vklogin.ini</language>
+			<language tag="en-GB">admin/languages/en-GB.com_vklogin.ini</language>
+		</languages>
+</administration>
+</install>
+
