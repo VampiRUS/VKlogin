@@ -9,7 +9,7 @@ class plgAuthenticationVkontakte extends JPlugin
 	
 	public function onUserAuthenticate($credentials, $options, &$response)
 	{
-		$this->onAuthenticate( $credentials, $options, $response );
+		return $this->onAuthenticate( $credentials, $options, $response );
 	}
 	
 	public function onAuthenticate( $credentials, $options, &$response )

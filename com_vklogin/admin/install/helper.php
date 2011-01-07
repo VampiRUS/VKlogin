@@ -6,13 +6,16 @@ class VkloginInstallHelper{
 	
 	static function installPlugin($name, $element, $folder){
 		$success = true;
-		$db = & JFactory::getDBO();
-		$pluginsDstPath = JPATH_ROOT.DS.'plugins'.DS.$folder;
-		if (JFile::exists($pluginsDstPath.DS.$element.DS.'.xml')){
-			self::uninstallPlugin($element, $folder);
-		}
 		$version = new JVersion;
 		$joomla = $version->getShortVersion();
+		$db = & JFactory::getDBO();
+		$pluginsDstPath = JPATH_ROOT.DS.'plugins'.DS.$folder;
+		if(substr($joomla,0,3) == '1.6'){
+			$pluginsDstPath .= DS.$element;
+		}
+		if (JFile::exists($pluginsDstPath.DS.$element.'.xml')){
+			self::uninstallPlugin($element, $folder);
+		}
 		if(substr($joomla,0,3) == '1.6'){
 			$pluginsQuery = "INSERT INTO `#__extensions` (`type`,`name`, `element`, `folder`, `enabled`,`protected` ) VALUES ('plugin','%s', '%s', '%s', 1, 1 );";
 		} else {
@@ -25,11 +28,15 @@ class VkloginInstallHelper{
 			JError::raiseError( 500, $db->stderr());
 			$success = false;
 		}
-		$files = JFolder::files($pluginsSrcPath);
-		foreach( $files as $file){
-			if (!JFile::move($pluginsSrcPath.DS.$file, $pluginsDstPath.DS.$file)){
-				$success = false;
+		if(substr($joomla,0,3) != '1.6'){
+			$files = JFolder::files($pluginsSrcPath);
+			foreach( $files as $file){
+				if (!JFile::move($pluginsSrcPath.DS.$file, $pluginsDstPath.DS.$file)){
+					$success = false;
+				}
 			}
+		} else {
+			$success = JFolder::move($pluginsSrcPath, $pluginsDstPath);
 		}
 		return $success;
 	}
@@ -46,10 +53,14 @@ class VkloginInstallHelper{
 		}
 		$db->setQuery($pluginsQuery);
 		$db->query();
-		$files[] = JPATH_ROOT.DS.'plugins'.DS.$folder.DS.$element.'.php';
-		$files[] = JPATH_ROOT.DS.'plugins'.DS.$folder.DS.$element.'.xml';
-		//TODO to get files from xml
-		JFile::delete($files);
+		if(substr($joomla,0,3) != '1.6'){
+			$files[] = JPATH_ROOT.DS.'plugins'.DS.$folder.DS.$element.'.php';
+			$files[] = JPATH_ROOT.DS.'plugins'.DS.$folder.DS.$element.'.xml';
+			//TODO to get files from xml
+			JFile::delete($files);
+		} else {
+			JFolder::delete(JPATH_ROOT.DS.'plugins'.DS.$folder.DS.$element);
+		}
 	}
 
 	static function installModule( $title, $module ){

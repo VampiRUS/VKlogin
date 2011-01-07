@@ -74,7 +74,7 @@ class VkloginController extends JController
 				$newUsertype = $usersConfig->get( 'new_usertype', 'Registered');
 			} else {
 				$newUsertype = $usersConfig->get( 'new_usertype', 2);
-				$data['groups'][$newUsertype] = null;
+				$data['groups'][] = $newUsertype;
 				$mainframe->setUserState('com_vklogin.registration.data', $data);
 			}
 			$vkConfig = &JComponentHelper::getParams( 'com_vklogin' );
@@ -89,8 +89,14 @@ class VkloginController extends JController
 					$mainframe->redirect(JRoute::_('index.php?option=com_comprofiler&task=registers', false));
 				return;
 			}
-			if (!$user->bind( $data, 'usertype' )) {
-				JError::raiseError( 500, $user->getError());
+			if($this->jVersion != '1.6'){
+				if (!$user->bind( $data, 'usertype' )) {
+					JError::raiseError( 500, $user->getError());
+				}
+			} else {
+				if (!$user->bind( $data)) {
+					JError::raiseError( 500, $user->getError());
+				}
 			}
 			if($this->jVersion != '1.6'){
 				$user->set('usertype', $newUsertype);
@@ -119,16 +125,16 @@ class VkloginController extends JController
 		$username =  JRequest::getString('username', '', 'post');
 		$password = JRequest::getString('password', '', 'post');
 		$query = 'SELECT u.`id`, u.`password`, u.`block`,u.`usertype`'
-			.(($this->jVersion == '1.6')?' ,g.`group_id`':'')
+			//.(($this->jVersion == '1.6')?' ,g.`group_id`':'')
 			. ' FROM `#__users` as u'
-			.(($this->jVersion == '1.6')?' JOIN `#__user_usergroup_map as g`':'')
+			//.(($this->jVersion == '1.6')?' JOIN `#__user_usergroup_map as g`':'')
 			. ' WHERE username=' . $db->Quote($username)
-			.(($this->jVersion == '1.6')?' AND u.id=g.user_id':'')
+			//.(($this->jVersion == '1.6')?' AND u.id=g.user_id':'')
 			;
 		$db->setQuery( $query );
 		$result = $db->loadObject();
 		if ( $this->jVersion == '1.6'){
-			$checkType = !JAccess::checkGroup($result['group_id'], 'core.admin');
+			$checkType = !JAccess::check($result->id, 'core.admin');
 		} else {
 			$checkType = true;
 		}

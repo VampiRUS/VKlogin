@@ -8,7 +8,7 @@ class plgUserVKuser extends JPlugin {
 
 	public function onUserAfterDelete($user, $succes, $msg)
 	{
-		$this->onAfterDeleteUser($user, $succes, $msg);
+		return $this->onAfterDeleteUser($user, $succes, $msg);
 	}
 	
 	public function onAfterDeleteUser($user, $succes, $msg)

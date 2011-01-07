@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6.0" method="upgrade">
 	<name>COM_VKLOGIN</name>
-	<creationDate>December 2010</creationDate>
+	<creationDate>January 2011</creationDate>
 	<author>VampiRUS</author>
 	<authorEmail>vamp1rus@yandex.ru</authorEmail>
 	<authorUrl>http://vampirus.ru</authorUrl>
