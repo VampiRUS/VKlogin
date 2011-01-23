@@ -52,11 +52,15 @@ class VkloginController extends JController
 				JError::raiseError( 403, JText::_( 'Registration not allowed' ));
 				return;
 			}
+			$vkConfig = &JComponentHelper::getParams( 'com_vklogin' );
 			//joomla 1.6. form
 			$requestData = JRequest::getVar('jform', array(), 'post', 'array');
 			$username = JRequest::getString('username', $requestData['username'], 'post');
 			$name = JRequest::getString('name', $requestData['name'], 'post');
 			$email = JRequest::getString('email', $requestData['email'], 'post');
+			if ($vkConfig->get('silentreg') && !$email && !$vkConfig->get( 'jomsocial' )){
+				$email = JRequest::getString('domain', '', 'post').'@vk.com';
+			} 
 			if($this->jVersion == '1.6'){
 				JUser::getTable('User', 'JTable');
 				$user = new JUser();
@@ -77,7 +81,6 @@ class VkloginController extends JController
 				$data['groups'][] = $newUsertype;
 				$mainframe->setUserState('com_vklogin.registration.data', $data);
 			}
-			$vkConfig = &JComponentHelper::getParams( 'com_vklogin' );
 			if ($vkConfig->get( 'jomsocial' )){
 				//если jomsocial
 				$session->set('vkdata',$data);
@@ -207,7 +210,7 @@ class VkloginController extends JController
 		}
 
 		$options = array();
-		$options['remember'] = JRequest::getBool('remember', false);
+		$options['remember'] = false;
 		$options['return'] = $return;
 
 		$credentials = array();

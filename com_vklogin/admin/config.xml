@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<params>
-		<param name="appid" type="text" default="" label="ID приложения" description="ID приложения"/>
-		<param name="secret" type="text" default="" label="Защищенный ключ" description="Защищенный ключ"/>
-		<param name="jomsocial" type="radio" default="0" label="Social Integration" description="Social Integration">
+		<param name="appid" type="text" default="" label="COM_VKLOGIN_APPID" description="COM_VKLOGIN_APPID_DESC"/>
+		<param name="secret" type="text" default="" label="COM_VKLOGIN_POTECTED_KEY" description="COM_VKLOGIN_POTECTED_KEY_DESC"/>
+		<param name="jomsocial" type="radio" default="0" label="COM_VKLOGIN_SOCIAL_INTEGRATION" description="COM_VKLOGIN_SOCIAL_INTEGRATION_DESC">
 			<option value="0">No</option>
 			<option value="1">JomSocial</option>
 			<option value="2">Community Builder</option>
+		</param>
+		<param name="silentreg" type="radio" default="0" label="COM_VKLOGIN_SILENT_REG" description="COM_VKLOGIN_SILENT_REG_DESC">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
 		</param>
 		<param name="useractivation" type="hidden" default="0"/>
 	</params>
@@ -17,6 +21,10 @@
 			<option value="0">JNO</option>
 			<option value="1">JomSocial</option>
 			<option value="2">Community Builder</option>
+		</field>
+		<field name="silentreg" type="radio" default="0" label="COM_VKLOGIN_SILENT_REG" description="COM_VKLOGIN_SILENT_REG_DESC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 		<field name="useractivation" type="hidden" default="0"/>
 	</fieldset>

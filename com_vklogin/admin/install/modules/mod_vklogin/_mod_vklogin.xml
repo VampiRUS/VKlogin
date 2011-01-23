@@ -2,12 +2,12 @@
 <install type="module" version="1.5.0">
 	<name>VKLogin</name>
 	<author>VampiRUS</author>
-	<creationDate>19.09.2010</creationDate>
+	<creationDate>21.01.2011</creationDate>
 	<copyright>vampirus.ru</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>vamp1rus@yandex.ru</authorEmail>
 	<authorUrl>vampirus.ru</authorUrl>
-	<version>0.0.7</version>
+	<version>0.0.9</version>
 	<description>Показывает стилизованную кнопку Войти ВКонтакте</description>
 	<files>
 		<filename module="mod_vklogin">mod_vklogin.php</filename>

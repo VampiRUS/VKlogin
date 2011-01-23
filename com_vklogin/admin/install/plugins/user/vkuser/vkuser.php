@@ -32,4 +32,5 @@ class plgUserVKuser extends JPlugin {
 		unset($_COOKIE['vk_app_'.$appid]); 
 		return true;
 	}
+	
 }

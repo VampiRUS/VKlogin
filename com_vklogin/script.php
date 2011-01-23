@@ -9,6 +9,12 @@ class com_vkloginInstallerScript{
 		$parent->getParent()->setRedirectURL('index.php?option=com_vklogin&task=postinstall');
 	}
  
+	function update($parent) 
+	{
+		//$parent is the class calling this method
+		$parent->getParent()->setRedirectURL('index.php?option=com_vklogin&task=postinstall');
+	}
+	
 	/**
 	 * method to uninstall the component
 	 *

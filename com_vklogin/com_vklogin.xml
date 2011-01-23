@@ -7,7 +7,7 @@
 	<authorUrl>http://vampirus.ru</authorUrl>
 	<copyright>vampirus.ru</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-	<version>0.0.9</version>
+	<version>0.1.0</version>
 	<description>COM_VKLOGIN_DESC</description> 
 	<scriptfile>script.php</scriptfile>
 	<files folder="site">

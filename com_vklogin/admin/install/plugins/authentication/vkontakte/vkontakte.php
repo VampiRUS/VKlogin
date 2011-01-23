@@ -43,12 +43,38 @@ class plgAuthenticationVkontakte extends JPlugin
 						$db->query();
 					}
 					$success = 1;
+					if (JRequest::getBool('vkremember', false)){
+						jimport('joomla.utilities.simplecrypt');
+						jimport('joomla.utilities.utility');
+			
+						//Create the encryption key, apply extra hardening using the user agent string
+						$key = JUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
+						$credentials['vk_username'] = $row->username;
+						$credentials['vk_password'] = $row->password;
+						$crypt = new JSimpleCrypt($key);
+						$rcookie = $crypt->encrypt(serialize($credentials));
+						$lifetime = time() + 365*24*60*60;
+						setcookie( JUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime, '/' );
+					}
 					$response->email 	= $row->email;
 					$response->fullname = $row->name;
 					$response->password = $row->password;
 					$response->username= $row->username;
 				}
 				
+			} elseif (isset($credentials['vk_username']) && isset($credentials['vk_password'])){
+				$db = &JFactory::getDBO();
+				$db->setQuery('SELECT * FROM #__users WHERE username='.
+					$db->Quote($credentials['vk_username'])." AND password=".
+					$db->Quote($credentials['vk_password']));
+				if ($row = $db->loadObject())
+				{
+					$success = 1;
+					$response->email 	= $row->email;
+					$response->fullname = $row->name;
+					$response->password = $row->password;
+					$response->username= $row->username;
+				}
 			}
 		}
 		if ($success)
