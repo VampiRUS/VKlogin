@@ -38,6 +38,8 @@ $version = new JVersion;
 $joomla = $version->getShortVersion();
 if(substr($joomla,0,3) == '1.6'){
 	$jVersion = '1.6';
+} else {
+	$jVersion = '1.5';
 }
 switch ($social) {
 	case 2:
