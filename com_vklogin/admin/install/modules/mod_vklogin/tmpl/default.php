@@ -44,8 +44,8 @@ function vk_handler(response) {
 					switch($login){
 						case 1: echo 'r.response[0].last_name;';break;
 						case 2: echo 'r.response[0].first_name+" "+r.response[0].last_name;';break;
-						case 3: echo 'r.response[0].last_name+mid;';break;
-						case 4: echo 'r.response[0].first_name+mid;';break;
+						case 3: echo 'mid+"_"+r.response[0].last_name;';break;
+						case 4: echo 'mid+"_"+r.response[0].first_name;';break;
 						case 0:
 						default: echo '"";';
 					}
