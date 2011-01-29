@@ -40,7 +40,7 @@ function vk_handler(response) {
 				document.forms.vklogin.name.value = r.response[0].last_name + ' ' + r.response[0].first_name;
 				document.forms.vklogin.photo_rec.value = r.response[0].photo_rec;
 				if (r.response[0].nickname == ''){
-					document.forms.vklogin.username.value = <?php $login = $params->get('login');
+					document.forms.vklogin.username.value = <?php $login = $params->get('login_format');
 					switch($login){
 						case 1: echo 'r.response[0].last_name;';break;
 						case 2: echo 'r.response[0].first_name+" "+r.response[0].last_name;';break;

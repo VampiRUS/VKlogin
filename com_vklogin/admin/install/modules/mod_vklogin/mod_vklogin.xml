@@ -25,7 +25,7 @@
 		<fields name="params">
 			<fieldset name="basic">
 				<field
-						name="login"
+						name="login_format"
 						type="list"
 						default="0"
 						label="MOD_VKLOGIN_LOGIN_NOT_EXISTS"
@@ -76,7 +76,7 @@
 		</fields>
 	</config>
 		<params>
-		<param name="login" type="list" default="0" label="MOD_VKLOGIN_LOGIN_NOT_EXISTS" description="MOD_VKLOGIN_LOGIN_NOT_EXISTS_DESC">
+		<param name="login_format" type="list" default="0" label="MOD_VKLOGIN_LOGIN_NOT_EXISTS" description="MOD_VKLOGIN_LOGIN_NOT_EXISTS_DESC">
 			<option value="0">MOD_VKLOGIN_EMPTY</option>
 			<option value="1">MOD_VKLOGIN_SECOND_NAME</option>
 			<option value="2">MOD_VKLOGIN_NAME_SECOND_NAME</option>
