@@ -42,7 +42,7 @@ class plgJCommentsVkAvatar extends JPlugin{
 		parent::__construct($subject, $config);
 	}
 	
-	function onPrepareAvatar(&$comments){
+	function onPrepareAvatar(&$comment){
 		$comments = array();
 		$comments[0] =& $comment;
 		$this->onPrepareAvatars($comments);
