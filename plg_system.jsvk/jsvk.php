@@ -39,7 +39,7 @@ class plgSystemJsVk extends JPlugin
 
 	function onAfterRoute()
 	{
-		global $mainframe;
+		$mainframe	=& JFactory::getApplication();
 		if ($mainframe->isAdmin()) {
 			return;
 		}
@@ -106,8 +106,10 @@ class plgSystemJsVk extends JPlugin
 				$usr = $session->get('tmpUser');
 				$data = $session->get('vkdata',array());
 				$db = &JFactory::getDBO();
-				$db->setQuery('UPDATE #__users SET `block`=0 , `activation`='.$db->Quote($data['activation'])
-					.' WHERE id='.$db->Quote($usr->id));
+				$db->setQuery('UPDATE #__users SET `block`=0  WHERE id='.$db->Quote($usr->id));
+				$db->query();
+				$db->setQuery('INSERT INTO #__vklogin_users (userid,vkid) VALUES ('.$usr->id.','
+					.$db->Quote($data['vkid']).')');
 				$db->query();
 				$session->clear('tmpUser');
 				$session->clear('JS_REG_TOKEN');

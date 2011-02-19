@@ -122,5 +122,26 @@ class VkloginInstallHelper{
 		JFolder::delete(JPATH_ROOT.DS.'modules'.DS.$module);
 	}
 	
+	static function updateTable(){
+		$db = JFactory::getDBO();
+		$db->setQuery("SHOW COLUMNS FROM #__vklogin_users LIKE 'vkid'");
+		if (!$db->loadObject()){
+			$db->setQuery('ALTER TABLE #__vklogin_users ADD COLUMN `vkid` INT(11) UNSIGNED NOT NULL, ADD INDEX (`vkid`)');
+			$db->query();
+			$db->setQuery('SELECT activation,id FROM #__users WHERE id IN (SELECT userid FROM #__vklogin_users)');
+			$data = $db->loadObjectList();
+			$insertData = array();
+			foreach ($data as $user) {
+				$insertData[] = "({$user->id}, {$user->activation})";
+			}
+			if (!empty($insertData)){
+				$sql = "INSERT INTO #__vklogin_users (`userid`, `vkid`) VALUES ";
+				$sql .= implode(',', $insertData);
+				$sql .= " ON DUPLICATE KEY UPDATE `vkid`=VALUES(`vkid`)";
+				$db->setQuery($sql);
+				$db->query();
+			}
+		}
+	}
 }
 ?>

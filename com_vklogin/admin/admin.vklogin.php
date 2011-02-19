@@ -1,7 +1,6 @@
 <?php
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.application.helper');
-
 require_once( JApplicationHelper::getPath( 'admin_html' ) );
 JToolBarHelper::preferences('com_vklogin', '200');
 $jspath = JPATH_ROOT.DS.'components'.DS.'com_community';
@@ -17,6 +16,7 @@ if ($task == 'postinstall'){
 	if (!VkloginInstallHelper::installModule('Войти ВКонтакте','mod_vklogin')){
 		$errors[] = JText::_('COM_VKLOGIN_MOD_VKLOGIN_MODULE_INSTALLATION_ERROR');
 	}
+	VkloginInstallHelper::updateTable();
 	foreach ($errors as $error){
 		JError::raiseError( 500, $error);
 	}

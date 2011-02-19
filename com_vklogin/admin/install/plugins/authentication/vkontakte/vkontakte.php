@@ -33,7 +33,8 @@ class plgAuthenticationVkontakte extends JPlugin
 					.trim($vkConfig->get('secret'))) == $session->get('sig', 'error'))
 			{
 				$db = &JFactory::getDBO();
-				$db->setQuery('SELECT * FROM #__users WHERE activation='.$db->Quote($session->get('mid', 'error')));
+				$db->setQuery('SELECT u.* FROM #__users as u,#__vklogin_users as v WHERE v.`vkid`='
+					.$db->Quote($session->get('mid', 'error')).' AND v.userid=u.id');
 				if ($row = $db->loadObject())
 				{
 					$photo = $session->get('vk_photo','');

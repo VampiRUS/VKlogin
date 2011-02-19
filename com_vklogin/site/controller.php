@@ -39,7 +39,7 @@ class VkloginController extends JController
 			$session->set('vk_photo',JRequest::getString('photo_rec', '', 'post'));
 		}
 		$db = &JFactory::getDBO();
-		$db->setQuery('SELECT id FROM #__users WHERE activation='.$db->Quote($vk_cookie['mid']));
+		$db->setQuery('SELECT userid FROM #__vklogin_users WHERE vkid='.$db->Quote($vk_cookie['mid']));
 		$db->query();
 		if ($db->getNumRows())
 		{
@@ -72,7 +72,7 @@ class VkloginController extends JController
 				'username'	=> $username,
 				'name'		=> $name,
 				'email'		=> $email,
-				'activation'=> $vk_cookie['mid']
+				'vkid'=> $vk_cookie['mid']
 			);
 			if($this->jVersion != '1.6'){
 				$newUsertype = $usersConfig->get( 'new_usertype', 'Registered');
@@ -112,6 +112,9 @@ class VkloginController extends JController
 				$this->register();
 				return false;
 			} else {
+				$db->setQuery('INSERT INTO #__vklogin_users (userid,vkid) VALUES ('.$user->id.','
+					.$db->Quote($vk_cookie['mid']).')');
+				$db->query();
 				$this->login();
 			}
 			$this->setRedirect('index.php');
@@ -128,11 +131,8 @@ class VkloginController extends JController
 		$username =  JRequest::getString('username', '', 'post');
 		$password = JRequest::getString('password', '', 'post');
 		$query = 'SELECT u.`id`, u.`password`, u.`block`,u.`usertype`'
-			//.(($this->jVersion == '1.6')?' ,g.`group_id`':'')
 			. ' FROM `#__users` as u'
-			//.(($this->jVersion == '1.6')?' JOIN `#__user_usergroup_map as g`':'')
 			. ' WHERE username=' . $db->Quote($username)
-			//.(($this->jVersion == '1.6')?' AND u.id=g.user_id':'')
 			;
 		$db->setQuery( $query );
 		$result = $db->loadObject();
@@ -148,7 +148,7 @@ class VkloginController extends JController
 			$salt	= @$parts[1];
 			$testcrypt = JUserHelper::getCryptedPassword($password, $salt);
 			if ($crypt == $testcrypt) {
-				$db->setQuery( 'UPDATE #__users SET activation='.$db->Quote($vk_cookie['mid']).' WHERE id='.$result->id );
+				$db->setQuery( 'UPDATE #__vklogin_users SET `vkid`='.$db->Quote($vk_cookie['mid']).' WHERE userid='.$result->id );
 				$db->query();
 				$error = $mainframe->login(array('username'=>$username, 'password'=>$password), array());
 				if(!JError::isError($error))

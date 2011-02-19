@@ -39,7 +39,7 @@ class plgCommunityVkontakte extends CApplications
 			$pass = JUserHelper::genRandomPassword();
 			$data['password'] = $pass;
 			$data['password2'] = $pass;
-			unset($data['activation']);
+			unset($data['vkid']);
 		}
 		if ($step == 1){
 			$pass = JUserHelper::genRandomPassword();

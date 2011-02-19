@@ -23,7 +23,7 @@ class getvkloginregisterTab extends cbPluginHandler {
 			$data = $session->get('vkdata',array());
 			$socialdata = $session->get('jsdata',array());
 			$step = $session->get('regstep',-1);
-			unset($data['activation']);
+			unset($data['vkid']);
 			if ($step == 0 && empty($_POST) && !empty($data)){
 				$user->set('name',$data['name']);
 				$user->set('username',$data['username']);
@@ -68,7 +68,8 @@ class getvkloginregisterTab extends cbPluginHandler {
 		if (!VKlogin::check_cookie($vk_cookie) || $session->get('regstep',-1) != 2)
 			return;
 		$db = &JFactory::getDBO();
-		$db->setQuery('UPDATE #__users SET activation='.$db->Quote($vk_cookie['mid']).' WHERE id='.(int)$userComplete->id);
+		$db->setQuery('INSERT INTO #__vklogin_users (userid, vkid) VALUES ('
+		.(int)$userComplete->id.','.$db->Quote($vk_cookie['mid']).')');
 		$db->query();
 		$session->set('regstep',3);
 		$mainframe	=& JFactory::getApplication();

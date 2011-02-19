@@ -8,7 +8,7 @@
 	<authorEmail>vamp1rus@yandex.ru</authorEmail>
 	<authorUrl>vampirus.ru</authorUrl>
 	<version>1.2.3</version>
-	<description>VKLOGIN.</description>
+	<description>VKLOGIN</description>
 	<files>
 		<filename plugin="vkloginregister">vkloginregister.php</filename>
 		<filename>index.html</filename>
