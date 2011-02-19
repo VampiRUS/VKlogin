@@ -63,4 +63,26 @@ if (!defined('VKAPI') && $type != 'logout'){
 	$doc->addCustomTag("<script src='http://userapi.com/js/api/openapi.js?18' type='text/javascript' charset='windows-1251'></script>");
 }
 
-require(JModuleHelper::getLayoutPath('mod_vklogin'));
+$mod_id = $params->get('mod_id');
+if ($type == 'logout' && $mod_id != ''){
+	$document	= &JFactory::getDocument();
+	$renderer	= $document->loadRenderer('module');
+	$db		=& JFactory::getDBO();
+
+	$query = 'SELECT id, title, module, position, params'
+		. ' FROM #__modules AS m'
+		. ' WHERE id='.intval($mod_id);
+	$db->setQuery( $query );
+	if ($mod = $db->loadObject()){
+		$file					= $mod->module;
+		$custom 				= substr( $file, 0, 4 ) == 'mod_' ?  0 : 1;
+		$modu->user  	= $custom;
+		// CHECK: custom module name is given by the title field, otherwise it's just 'om' ??
+		$mod->name		= $custom ? $mod->title : substr( $file, 4 );
+		$mod->style		= null;
+		$mod->position	= strtolower($mod->position);
+		echo $renderer->render($mod, array());
+	}
+} else {
+	require(JModuleHelper::getLayoutPath('mod_vklogin'));
+}
