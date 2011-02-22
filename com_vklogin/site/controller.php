@@ -148,7 +148,7 @@ class VkloginController extends JController
 			$salt	= @$parts[1];
 			$testcrypt = JUserHelper::getCryptedPassword($password, $salt);
 			if ($crypt == $testcrypt) {
-				$db->setQuery( 'UPDATE #__vklogin_users SET `vkid`='.$db->Quote($vk_cookie['mid']).' WHERE userid='.$result->id );
+				$db->setQuery( 'INSERT INTO #__vklogin_users (vkid,userid) VALUES('.$db->Quote($vk_cookie['mid']).','.$result->id.')' );
 				$db->query();
 				$error = $mainframe->login(array('username'=>$username, 'password'=>$password), array());
 				if(!JError::isError($error))
