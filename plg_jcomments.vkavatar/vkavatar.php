@@ -57,11 +57,9 @@ class plgJCommentsVkAvatar extends JPlugin{
 		}
 		$users = array_unique($users);
 		if (count($users)) {
-			$query = 'SELECT u.userid, u.photo as avatar, i.activation as vk_id'
-				. ' FROM #__vklogin_users as u,'
-				. ' #__users as i'
+			$query = 'SELECT u.userid, u.photo as avatar, u.vkid as vk_id'
+				. ' FROM #__vklogin_users as u'
 				. ' WHERE u.userid in (' . implode(',', $users)  . ')'
-				. ' AND u.userid=i.id'
 				;
 			$db = JFactory::getDBO();
 			$db->setQuery($query);
