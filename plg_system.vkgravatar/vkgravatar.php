@@ -44,9 +44,12 @@ class plgSystemVkGravatar extends JPlugin
 			$emails = array_map(array($db,"Quote"),$result[2]);
 			$db->setQuery('SELECT photo,email_hash FROM #__vklogin_users WHERE email_hash in ('.implode(',', $emails).')');
 			$photo = $db->loadObjectList('email_hash');
-			$keys = array_keys(array_intersect($result[2], array_keys($photo)));
+			$keys = array_keys(array_unique(array_intersect($result[2], array_keys($photo))));
 			$search = array_intersect_key($result[1], $keys);
-			$replace = array_keys($db->loadObjectList('photo'));
+			$replace = $db->loadObjectList('photo');
+			sort($search,SORT_STRING);
+			uasort($replace, array($this,'sort'));
+			$replace = array_keys($replace);
 			$buffer = str_replace($search, $replace, $buffer);
 		}
 		$buffer 	= str_replace($placeholders, $editContents[0], $buffer);
