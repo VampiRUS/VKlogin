@@ -33,11 +33,15 @@ CREATE TABLE IF NOT EXISTS `#__vklogin_users` (
 `userid` INT( 11 ) NOT NULL ,
 `photo` VARCHAR( 255 ) NOT NULL ,
 `vkid` INT( 11 ) NOT NULL ,
+`email_hash` VARCHAR( 11 ) NOT NULL ,
 UNIQUE (
 `userid`
 ),
 INDEX (
 `vkid`
+),
+INDEX (
+`email_hash`
 )
 ) ENGINE = MYISAM ;
 

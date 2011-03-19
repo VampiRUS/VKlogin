@@ -142,6 +142,24 @@ class VkloginInstallHelper{
 				$db->query();
 			}
 		}
+		$db->setQuery("SHOW COLUMNS FROM #__vklogin_users LIKE 'email_hash'");
+		if (!$db->loadObject()){
+			$db->setQuery('ALTER TABLE #__vklogin_users ADD COLUMN `email_hash` VARCHAR(32) NOT NULL, ADD INDEX (`email_hash`)');
+			$db->query();
+			$db->setQuery('SELECT MD5(email) as email,id FROM #__users WHERE id IN (SELECT userid FROM #__vklogin_users)');
+			$data = $db->loadObjectList();
+			$insertData = array();
+			foreach ($data as $user) {
+				$insertData[] = "({$user->id}, ".$db->Quote($user->email).")";
+			}
+			if (!empty($insertData)){
+				$sql = "INSERT INTO #__vklogin_users (`userid`, `email_hash`) VALUES ";
+				$sql .= implode(',', $insertData);
+				$sql .= " ON DUPLICATE KEY UPDATE `email_hash`=VALUES(`email_hash`)";
+				$db->setQuery($sql);
+				$db->query();
+			}
+		}
 	}
 }
 ?>

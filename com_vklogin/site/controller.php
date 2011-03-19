@@ -112,8 +112,8 @@ class VkloginController extends JController
 				$this->register();
 				return false;
 			} else {
-				$db->setQuery('INSERT INTO #__vklogin_users (userid,vkid) VALUES ('.$user->id.','
-					.$db->Quote($vk_cookie['mid']).')');
+				$db->setQuery('INSERT INTO #__vklogin_users (userid,vkid,email_hash) VALUES ('.$user->id.','
+					.$db->Quote($vk_cookie['mid']).','.$db->Quote(md5($user->email)).')');
 				$db->query();
 				$this->login();
 			}
@@ -130,7 +130,7 @@ class VkloginController extends JController
 		}
 		$username =  JRequest::getString('username', '', 'post');
 		$password = JRequest::getString('password', '', 'post');
-		$query = 'SELECT u.`id`, u.`password`, u.`block`,u.`usertype`'
+		$query = 'SELECT u.`id`,u.`email`, u.`password`, u.`block`,u.`usertype`'
 			. ' FROM `#__users` as u'
 			. ' WHERE username=' . $db->Quote($username)
 			;
@@ -148,7 +148,8 @@ class VkloginController extends JController
 			$salt	= @$parts[1];
 			$testcrypt = JUserHelper::getCryptedPassword($password, $salt);
 			if ($crypt == $testcrypt) {
-				$db->setQuery( 'INSERT INTO #__vklogin_users (vkid,userid) VALUES('.$db->Quote($vk_cookie['mid']).','.$result->id.')' );
+				$db->setQuery( 'INSERT INTO #__vklogin_users (vkid,userid,email_hash) VALUES('
+					.$db->Quote($vk_cookie['mid']).','.$result->id.','.$db->Quote(md5($result->email)).')' );
 				$db->query();
 				$error = $mainframe->login(array('username'=>$username, 'password'=>$password), array());
 				if(!JError::isError($error))

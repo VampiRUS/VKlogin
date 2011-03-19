@@ -68,8 +68,8 @@ class getvkloginregisterTab extends cbPluginHandler {
 		if (!VKlogin::check_cookie($vk_cookie) || $session->get('regstep',-1) != 2)
 			return;
 		$db = &JFactory::getDBO();
-		$db->setQuery('INSERT INTO #__vklogin_users (userid, vkid) VALUES ('
-		.(int)$userComplete->id.','.$db->Quote($vk_cookie['mid']).')');
+		$db->setQuery('INSERT INTO #__vklogin_users (userid, vkid,email_hash) VALUES ('
+		.(int)$userComplete->id.','.$db->Quote($vk_cookie['mid']).','.$db->Quote(md5($userComplete->email)).')');
 		$db->query();
 		$session->set('regstep',3);
 		$mainframe	=& JFactory::getApplication();

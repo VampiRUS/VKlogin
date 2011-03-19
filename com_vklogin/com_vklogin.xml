@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6.0" method="upgrade">
 	<name>COM_VKLOGIN</name>
-	<creationDate>23.02.2011</creationDate>
+	<creationDate>19.03.2011</creationDate>
 	<author>VampiRUS</author>
 	<authorEmail>vamp1rus@yandex.ru</authorEmail>
 	<authorUrl>http://vampirus.ru</authorUrl>
 	<copyright>vampirus.ru</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-	<version>0.1.2</version>
+	<version>0.1.3</version>
 	<description>COM_VKLOGIN_DESC</description> 
 	<scriptfile>script.php</scriptfile>
 	<files folder="site">

@@ -39,8 +39,9 @@ class plgAuthenticationVkontakte extends JPlugin
 				{
 					$photo = $session->get('vk_photo','');
 					if (preg_match('#http://cs\d+\.vkontakte\.ru/u\d+/e_[a-z0-9]+\.jpg|http://vkontakte\.ru/images/question_e\.gif#',$photo)){
-						$db->setQuery('INSERT INTO #__vklogin_users (userid, photo) VALUES ('.$db->Quote($row->id).', '.$db->Quote($photo).')'.
-							' ON DUPLICATE KEY UPDATE `photo`= VALUES(`photo`)');
+						$db->setQuery('INSERT INTO #__vklogin_users (userid, photo,email_hash) VALUES ('
+							.$db->Quote($row->id).', '.$db->Quote($photo).','.$db->Quote(md5($row->email)).')'.
+							' ON DUPLICATE KEY UPDATE `photo`= VALUES(`photo`),`email_hash`=VALUES(`email_hash`)');
 						$db->query();
 					}
 					$success = 1;

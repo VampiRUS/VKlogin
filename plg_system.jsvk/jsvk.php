@@ -108,8 +108,8 @@ class plgSystemJsVk extends JPlugin
 				$db = &JFactory::getDBO();
 				$db->setQuery('UPDATE #__users SET `block`=0  WHERE id='.$db->Quote($usr->id));
 				$db->query();
-				$db->setQuery('INSERT INTO #__vklogin_users (userid,vkid) VALUES ('.$usr->id.','
-					.$db->Quote($data['vkid']).')');
+				$db->setQuery('INSERT INTO #__vklogin_users (userid,vkid,email_hash) VALUES ('.$usr->id.','
+					.$db->Quote($data['vkid']).','.$db->Quote(md5($usr->email)).')');
 				$db->query();
 				$session->clear('tmpUser');
 				$session->clear('JS_REG_TOKEN');
