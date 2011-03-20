@@ -38,18 +38,23 @@ class plgSystemVkGravatar extends JPlugin
 		// replace editor contents with placeholder text
 		$buffer 	= str_replace($editContents[0], $placeholders, $buffer);
 		
-		$preg = '#src="(http://www.gravatar.com/avatar/(.*?)\\?.*?)"#';
+	$preg = '#src="(http://www.gravatar.com/avatar/(.*?)\\?.*?)"|src="(http://www.gravatar.com/avatar.php\\?gravatar_id=(.*?)&.*?)"#';
 		if (preg_match_all($preg, $buffer, $result)){
+			$result[2] = array_merge($result[2],$result[4]);
+			$result[1] = array_merge($result[1],$result[3]);
 			$db = JFactory::getDBO();
 			$emails = array_map(array($db,"Quote"),$result[2]);
 			$db->setQuery('SELECT photo,email_hash FROM #__vklogin_users WHERE email_hash in ('.implode(',', $emails).')');
 			$photo = $db->loadObjectList('email_hash');
-			$keys = array_keys(array_unique(array_intersect($result[2], array_keys($photo))));
+			$keys =array_intersect($result[2], array_keys($photo));
 			$search = array_intersect_key($result[1], $keys);
-			$replace = $db->loadObjectList('photo');
-			sort($search,SORT_STRING);
-			uasort($replace, array($this,'sort'));
-			$replace = array_keys($replace);
+			$replace = array();
+
+			foreach ($result[2] as $key){
+				if (isset($photo[$key])) {
+					$replace[] = $photo[$key]->photo;
+				}
+			}
 			$buffer = str_replace($search, $replace, $buffer);
 		}
 		$buffer 	= str_replace($placeholders, $editContents[0], $buffer);
