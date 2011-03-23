@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `#__vklogin_users` (
 `userid` INT( 11 ) NOT NULL ,
 `photo` VARCHAR( 255 ) NOT NULL ,
 `vkid` INT( 11 ) NOT NULL ,
-`email_hash` VARCHAR( 11 ) NOT NULL ,
+`email_hash` VARCHAR( 32 ) NOT NULL ,
 UNIQUE (
 `userid`
 ),
