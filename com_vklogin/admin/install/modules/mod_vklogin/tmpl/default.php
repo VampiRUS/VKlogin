@@ -130,7 +130,7 @@ endif; ?>
 	</p>
 	<p id="form-login-password">
 		<label for="modlgn_passwd"><?php echo JText::_('MOD_VKLOGIN_PASSWORD') ?></label><br />
-		<input id="modlgn_passwd" type="password" name="passwd" class="inputbox" size="18" alt="password" />
+		<input id="modlgn_passwd" type="password" name="<?php echo (($jVersion=='1.6')?'password':'passwd');?>" class="inputbox" size="18" alt="password" />
 	</p>
 	<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>
 	<p id="form-login-remember">
@@ -224,5 +224,6 @@ endif; ?>
 	<input type="hidden" value="com_user<?php echo (($jVersion=='1.6')?'s':'');?>" name="option">
 	<input type="hidden" value="<?php echo (($jVersion=='1.6')?'user.':'');?>logout" name="task">
 	<input type="hidden" name="return" value="<?php echo $return; ?>" />
+	<?php echo JHTML::_( 'form.token' ); ?>
 </form>
 <?php endif; ?>
