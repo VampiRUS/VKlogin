@@ -141,8 +141,8 @@ endif; ?>
 	<?php endif; ?>
 	<input type="submit" name="Submit" class="button" value="<?php echo JText::_('MOD_VKLOGIN_BUTTON_LOGIN') ?>" />
 	</fieldset>
-	<input type="hidden" name="option" value="com_user" />
-	<input type="hidden" name="task" value="login" />
+	<input type="hidden" name="option" value="com_user<?php echo (($jVersion=='1.6')?'s':'');?>" />
+	<input type="hidden" name="task" value="<?php echo (($jVersion=='1.6')?'user.':'');?>login" />
 	<input type="hidden" name="return" value="<?php echo $return; ?>" />
 	<?php echo JHTML::_( 'form.token' ); ?>
 </form>
