@@ -47,7 +47,7 @@ class plgCommunityVkontakte extends CApplications
 			$data['password'] = $pass;
 			$data['password2'] = $pass;
 		}
-		$form = JString::str_ireplace('</form>','
+		$form = str_ireplace('</form>','
 		</form><a href="#" onclick="return showbox()">'.JText::_('I\'m already registred').'</a>
 <div id="addition_form" style="display:none;">
 <form action="'.JRoute::_( 'index.php?option=com_vklogin' ).'" method="post" class="form-validate">
@@ -82,7 +82,7 @@ class plgCommunityVkontakte extends CApplications
 	
 	function addJS(&$form, $data){
 		$params = json_encode($data);
-		$form = JString::str_ireplace('<script type="text/javascript">', '<script type="text/javascript">
+		$form = str_ireplace('<script type="text/javascript">', '<script type="text/javascript">
 			vk_params='.
 			$params.';
 			function showbox(){
