@@ -10,13 +10,13 @@ class VkloginInstallHelper{
 		$joomla = $version->getShortVersion();
 		$db = & JFactory::getDBO();
 		$pluginsDstPath = JPATH_ROOT.DS.'plugins'.DS.$folder;
-		if(substr($joomla,0,3) == '1.6'){
+		if(substr($joomla,0,3) != '1.5'){
 			$pluginsDstPath .= DS.$element;
 		}
 		if (JFile::exists($pluginsDstPath.DS.$element.'.xml')){
 			self::uninstallPlugin($element, $folder);
 		}
-		if(substr($joomla,0,3) == '1.6'){
+		if(substr($joomla,0,3) != '1.5'){
 			$pluginsQuery = "INSERT INTO `#__extensions` (`type`,`name`, `element`, `folder`, `enabled`,`protected` ) VALUES ('plugin','%s', '%s', '%s', 1, 1 );";
 		} else {
 			$pluginsQuery = "INSERT INTO `#__plugins` (`name`, `element`, `folder`, `published` ) VALUES ('%s', '%s', '%s', 1 );"; 
@@ -28,7 +28,7 @@ class VkloginInstallHelper{
 			JError::raiseError( 500, $db->stderr());
 			$success = false;
 		}
-		if(substr($joomla,0,3) != '1.6'){
+		if(substr($joomla,0,3) == '1.5'){
 			$files = JFolder::files($pluginsSrcPath);
 			foreach( $files as $file){
 				if (!JFile::move($pluginsSrcPath.DS.$file, $pluginsDstPath.DS.$file)){
@@ -46,14 +46,14 @@ class VkloginInstallHelper{
 		$db = & JFactory::getDBO();
 		$version = new JVersion;
 		$joomla = $version->getShortVersion();
-		if(substr($joomla,0,3) == '1.6'){
+		if(substr($joomla,0,3) != '1.5'){
 			$pluginsQuery = 'DELETE FROM `#__extensions` WHERE `folder`='.$db->Quote($folder).' AND `element`='.$db->Quote($element);
 		} else {
 			$pluginsQuery = 'DELETE FROM `#__plugins` WHERE `folder`='.$db->Quote($folder).' AND `element`='.$db->Quote($element); 
 		}
 		$db->setQuery($pluginsQuery);
 		$db->query();
-		if(substr($joomla,0,3) != '1.6'){
+		if(substr($joomla,0,3) == '1.5'){
 			$files[] = JPATH_ROOT.DS.'plugins'.DS.$folder.DS.$element.'.php';
 			$files[] = JPATH_ROOT.DS.'plugins'.DS.$folder.DS.$element.'.xml';
 			//TODO to get files from xml
@@ -70,7 +70,7 @@ class VkloginInstallHelper{
 		$modulesSrcPath = JPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_vklogin'.DS.'install'.DS.'modules';
 		$version = new JVersion;
 		$joomla = $version->getShortVersion();
-		if(substr($joomla,0,3) == '1.6'){
+		if(substr($joomla,0,3) != '1.5'){
 			$modulesQuery = 'SELECT * FROM `#__extensions` WHERE `name`="%2$s"';
 		} else {
 			$modulesQuery = "SELECT * FROM `#__modules` WHERE `title`='%s' AND `module`='%s'";
@@ -78,17 +78,17 @@ class VkloginInstallHelper{
 		$db->setQuery(sprintf($modulesQuery, $title, $module));
 		$db->query();
 		if (!$db->getNumRows()){
-			if(substr($joomla,0,3) == '1.6'){
+			if(substr($joomla,0,3) != '1.5'){
 				$modulesQuery = "INSERT INTO `#__extensions` (`type`,`name`, `element`, `folder`, `enabled`,`protected` ) VALUES ('module','mod_vklogin', 'mod_vklogin', '', 1, 1 );";
 				$db->setQuery($modulesQuery);
 				$db->query();
 			}
 			$modulesQuery =  "INSERT INTO `#__modules` (`title`, `module`, `position`";
-			if(substr($joomla,0,3) == '1.6'){
+			if(substr($joomla,0,3) != '1.5'){
 				$modulesQuery .= ", access, language";
 			}
 			$modulesQuery .= " ) VALUES ('%s', '%s', 'left'";
-			if(substr($joomla,0,3) == '1.6'){
+			if(substr($joomla,0,3) != '1.5'){
 				$modulesQuery .= ", 1, '*'";
 			}
 			$modulesQuery .= " );";
@@ -115,7 +115,7 @@ class VkloginInstallHelper{
 		$db->query();
 		$version = new JVersion;
 		$joomla = $version->getShortVersion();
-		if(substr($joomla,0,3) == '1.6'){
+		if(substr($joomla,0,3) != '1.5'){
 			$db->setQuery('DELETE FROM `#__extensions` WHERE `name`='.$db->Quote($module));
 			$db->query();
 		}

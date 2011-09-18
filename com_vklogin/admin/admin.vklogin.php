@@ -2,7 +2,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.application.helper');
 require_once( JApplicationHelper::getPath( 'admin_html' ) );
-JToolBarHelper::preferences('com_vklogin', '200');
+JToolBarHelper::preferences('com_vklogin', '250');
 $jspath = JPATH_ROOT.DS.'components'.DS.'com_community';
 if ($task == 'postinstall'){
 	include_once(dirname(__FILE__).'/install/helper.php');
@@ -22,10 +22,11 @@ if ($task == 'postinstall'){
 	}
 	$version = new JVersion;
 	$joomla = $version->getShortVersion();
-	if (empty($errors) && (substr($joomla,0,3) != '1.6')){
+	if (empty($errors)){
 		$mainframe = & JFactory::getApplication();
-		$mainframe->enqueueMessage(JText::_('COM_VKLOGIN_COMPONENT_WAS_SUCCESSFULLY_INSTALLED'));
+		$mainframe->redirect('index.php?option=com_vklogin',(substr($joomla,0,3) == '1.5')?JText::_('COM_VKLOGIN_COMPONENT_WAS_SUCCESSFULLY_INSTALLED'):'');
 	}
+	
 }
 if (file_exists($jspath.DS.'libraries'.DS.'core.php')){
 	if ($task == 'save'){

@@ -15,10 +15,13 @@ class VkloginController extends JController
 	{
 		$version = new JVersion;
 		$joomla = $version->getShortVersion();
-		if(substr($joomla,0,3) == '1.6'){
-			$this->jVersion = '1.6';
-		}
+		$this->jVersion =substr($joomla,0,3);
 		parent::__construct($config);
+	}
+	
+	private function isJ15()
+	{
+		return $this->jVersion=='1.5';
 	}
 	
 	public function display()
@@ -61,7 +64,7 @@ class VkloginController extends JController
 			if ($vkConfig->get('silentreg') && !$email && !$vkConfig->get( 'jomsocial' )){
 				$email = JRequest::getString('domain', '', 'post').'@vk.com';
 			} 
-			if($this->jVersion == '1.6'){
+			if(!$this->isJ15()){
 				JUser::getTable('User', 'JTable');
 				$user = new JUser();
 			} else {
@@ -74,7 +77,7 @@ class VkloginController extends JController
 				'email'		=> $email,
 				'vkid'=> $vk_cookie['mid']
 			);
-			if($this->jVersion != '1.6'){
+			if($this->isJ15()){
 				$newUsertype = $usersConfig->get( 'new_usertype', 'Registered');
 			} else {
 				$newUsertype = $usersConfig->get( 'new_usertype', 2);
@@ -92,7 +95,7 @@ class VkloginController extends JController
 					$mainframe->redirect(JRoute::_('index.php?option=com_comprofiler&task=registers', false));
 				return;
 			}
-			if($this->jVersion != '1.6'){
+			if($this->isJ15()){
 				if (!$user->bind( $data, 'usertype' )) {
 					JError::raiseError( 500, $user->getError());
 				}
@@ -101,7 +104,7 @@ class VkloginController extends JController
 					JError::raiseError( 500, $user->getError());
 				}
 			}
-			if($this->jVersion != '1.6'){
+			if($this->isJ15()){
 				$user->set('usertype', $newUsertype);
 				$user->set('gid', $authorize->get_group_id( '', $newUsertype, 'ARO' ));
 			}
@@ -136,7 +139,7 @@ class VkloginController extends JController
 			;
 		$db->setQuery( $query );
 		$result = $db->loadObject();
-		if ( $this->jVersion == '1.6'){
+		if ( !$this->isJ15()){
 			$checkType = !JAccess::check($result->id, 'core.admin');
 		} else {
 			$checkType = true;
@@ -179,7 +182,7 @@ class VkloginController extends JController
 		$user 	=& JFactory::getUser();
 
 		if ( $user->get('guest')) {
-			if($this->jVersion != '1.6'){
+			if($this->isJ15()){
 				JRequest::setVar('view', 'register');
 				parent::display();
 			} else {
@@ -195,7 +198,7 @@ class VkloginController extends JController
 				$view->display();
 			}
 		} else {
-				$mainframe->redirect(JRoute::_('index.php?option=com_user'.(($this->jVersion == '1.6')?'s':'').'&task=edit',false),JText::_('You are already registered.'));
+				$mainframe->redirect(JRoute::_('index.php?option=com_user'.((!$this->isJ15())?'s':'').'&task=edit',false),JText::_('You are already registered.'));
 		}
 	}
 	
@@ -224,7 +227,7 @@ class VkloginController extends JController
 		{
 			// Redirect if the return url is not registration or login
 			if ( ! $return ) {
-					$return	= JRoute::_('index.php?option=com_user'.(($this->jVersion == '1.6')?'s':''));
+					$return	= JRoute::_('index.php?option=com_user'.((!$this->isJ15())?'s':''));
 			}
 
 			$mainframe->redirect( $return );
@@ -233,7 +236,7 @@ class VkloginController extends JController
 		{
 			// Facilitate third party login forms
 			if ( ! $return ) {
-				$return	= JRoute::_('index.php?option=com_user'.(($this->jVersion == '1.6')?'s':'').'&view=login', false);
+				$return	= JRoute::_('index.php?option=com_user'.((!$this->isJ15())?'s':'').'&view=login', false);
 			}
 
 			// Redirect to a login form
