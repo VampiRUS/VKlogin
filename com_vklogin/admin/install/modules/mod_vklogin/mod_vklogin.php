@@ -36,10 +36,10 @@ if ($user->id){
 }
 $version = new JVersion;
 $joomla = $version->getShortVersion();
-if(substr($joomla,0,3) == '1.6'){
-	$jVersion = '1.6';
-} else {
+if(substr($joomla,0,3) == '1.5'){
 	$jVersion = '1.5';
+} else {
+	$jVersion = '1.7';
 }
 switch ($social) {
 	case 2:
