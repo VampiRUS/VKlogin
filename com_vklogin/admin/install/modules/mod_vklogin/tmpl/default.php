@@ -109,6 +109,11 @@ function vk_handler(response) {
 }
 //]]>
 </script>
+<style type="text/css">
+#vk_auth iframe{
+	width:<?php echo $params->get('width','200');?>px!important;
+}
+</style>
 <?php echo $params->get('pretext'); ?>
 <?php if ($params->get('standart_login')) : ?>
 <?php if(JPluginHelper::isEnabled('authentication', 'openid')) :
