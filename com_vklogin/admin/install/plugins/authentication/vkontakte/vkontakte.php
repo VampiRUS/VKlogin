@@ -44,6 +44,8 @@ class plgAuthenticationVkontakte extends JPlugin
 						$toUpdate['photo_big']))?$toUpdate['photo_big']:'';
 					$photo_medium = (preg_match('#http://cs\d+\.vkontakte\.ru/u\d+/b_[a-z0-9]+\.jpg|http://vkontakte\.ru/images/question_b\.gif#',
 						$toUpdate['photo_medium']))?$toUpdate['photo_medium']:'';
+					$photo_medium_rec = (preg_match('#http://cs\d+\.vkontakte\.ru/u\d+/d_[a-z0-9]+\.jpg|http://vkontakte\.ru/images/question_d\.gif#',
+						$toUpdate['photo_medium_rec']))?$toUpdate['photo_medium_rec']:'';
 					$photo = (preg_match('#http://cs\d+\.vkontakte\.ru/u\d+/e_[a-z0-9]+\.jpg|http://vkontakte\.ru/images/question_e\.gif#',
 						$toUpdate['photo']))?$toUpdate['photo']:'';
 					$first_name = isset($toUpdate['first_name'])?$toUpdate['first_name']:"";
@@ -63,18 +65,19 @@ class plgAuthenticationVkontakte extends JPlugin
 
 					$db->setQuery('INSERT INTO #__vklogin_users (userid, photo,
 						email_hash,first_name, last_name, nickname, sex, bdate, city, country,
-						timezone,photo_medium, photo_big, photo_rec, home_phone,
+						timezone,photo_medium, photo_big, photo_rec, photo_medium_rec, home_phone,
 						mobile_phone, university_name, faculty_name, graduation, domain ) VALUES ('
 					.$db->Quote($row->id).', '.$db->Quote($photo).','.$db->Quote(md5($row->email)).','.
 					$db->Quote($first_name).','.$db->Quote($last_name).','.$db->Quote($nikname).','.$db->Quote($sex).','.$db->Quote($bdate).','.
 					$db->Quote($city).','.$db->Quote($country).','.
-					$db->Quote($timezone).', '.$db->Quote($photo_medium).', '.$db->Quote($photo_big).', '.$db->Quote($photo_rec).','.$db->Quote($home_phone).','.
+					$db->Quote($timezone).', '.$db->Quote($photo_medium).', '.$db->Quote($photo_big).', '.
+					$db->Quote($photo_rec).','.$db->Quote($photo_medium_rec).','.$db->Quote($home_phone).','.
 					$db->Quote($mobile_phone).','.$db->Quote($university_name).','.$db->Quote($faculty_name).','.
 					$db->Quote($graduation).','.$db->Quote($domain).')'.
 					' ON DUPLICATE KEY UPDATE `photo`= VALUES(`photo`),`email_hash`=VALUES(`email_hash`)
 					,`first_name`=VALUES(`first_name`),`last_name`=VALUES(`last_name`),`bdate`=VALUES(`bdate`)
 					,`city`=VALUES(`city`),`country`=VALUES(`country`),`sex`=VALUES(`sex`),`photo_big`=VALUES(`photo_big`)
-					,`photo_medium`=VALUES(`photo_medium`),`photo_rec`=VALUES(`photo_rec`)
+					,`photo_medium`=VALUES(`photo_medium`),`photo_rec`=VALUES(`photo_medium_rec`),`photo_rec`=VALUES(`photo_medium_rec`)
 					,`nickname`=VALUES(`nickname`),`timezone`=VALUES(`timezone`),`home_phone`=VALUES(`home_phone`)
 					,`mobile_phone`=VALUES(`mobile_phone`),`university_name`=VALUES(`university_name`),`faculty_name`=VALUES(`faculty_name`)
 					,`graduation`=VALUES(`graduation`),`domain`=VALUES(`domain`)');

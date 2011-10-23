@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `#__vklogin_users` (
 `photo_medium` VARCHAR( 255 ) NOT NULL ,
 `photo_big` VARCHAR( 255 ) NOT NULL ,
 `photo_rec` VARCHAR( 255 ) NOT NULL ,
+`photo_medium_rec` VARCHAR( 255 ) NOT NULL ,
 `home_phone` VARCHAR( 15 ) NOT NULL ,
 `mobile_phone` VARCHAR( 15 ) NOT NULL ,
 `university_name` VARCHAR( 255 ) NOT NULL ,

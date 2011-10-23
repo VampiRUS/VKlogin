@@ -94,6 +94,9 @@ function vk_handler(response) {
 					if (typeof r.response[0].photo_rec != 'undefined'){ 
 						document.forms.vklogin.elements[20].value = r.response[0].photo_rec;
 					}
+					if (typeof r.response[0].photo_medium_rec != 'undefined'){ 
+						document.forms.vklogin.elements[21].value = r.response[0].photo_medium_rec;
+					}
 			}
 		document.forms.vklogin.submit();
 		}); 
@@ -174,6 +177,7 @@ endif; ?>
 	<input type="hidden" name="jomsocial[faculty_name]" value=""/>
 	<input type="hidden" name="jomsocial[graduation]" value=""/>
 	<input type="hidden" name="jomsocial[photo_rec]" value=""/>
+	<input type="hidden" name="jomsocial[photo_medium_rec]" value=""/>
 	<input type="hidden" name="domain" value=""/>
 	<input type="hidden" name="vkremember" value="" id="vkremember"/>
 	<input type="hidden" name="photo_rec" value=""/>

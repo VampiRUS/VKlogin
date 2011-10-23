@@ -162,7 +162,7 @@ class VkloginInstallHelper{
 		}
 		$newFileds = array(
 			'first_name', 'last_name', 'nickname', 'sex', 'bdate', 'city', 'country',
-			'timezone','photo_medium', 'photo_big', 'photo_rec', 'home_phone',
+			'timezone','photo_medium','photo_medium_rec', 'photo_big', 'photo_rec', 'home_phone',
 			'mobile_phone', 'university_name', 'faculty_name', 'graduation', 'domain'
 		);
 		$fieldsToInsert = array();
