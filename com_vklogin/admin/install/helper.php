@@ -160,6 +160,27 @@ class VkloginInstallHelper{
 				$db->query();
 			}
 		}
+		$newFileds = array(
+			'first_name', 'last_name', 'nickname', 'sex', 'bdate', 'city', 'country',
+			'timezone','photo_medium', 'photo_big', 'photo_rec', 'home_phone',
+			'mobile_phone', 'university_name', 'faculty_name', 'graduation', 'domain'
+		);
+		$fieldsToInsert = array();
+		foreach ($newFileds as $field) {
+			$db->setQuery("SHOW COLUMNS FROM #__vklogin_users LIKE '$field'");
+			if (!$db->loadObject()){
+				$fieldsToInsert[] = $field;
+			}
+		}
+		if (!empty($fieldsToInsert)) {
+			$sql = 'ALTER TABLE #__vklogin_users ';
+			foreach ($fieldsToInsert as $field) {
+				$sql .= "ADD COLUMN `$field` VARCHAR(255) NULL,";
+			}
+			$sql = substr($sql, 0, -1);
+			$db->setQuery($sql);
+			$db->query();
+		}
 	}
 }
 ?>

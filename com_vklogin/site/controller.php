@@ -38,8 +38,9 @@ class VkloginController extends JController
 		$session->set('secret',$vk_cookie['secret']);
 		$session->set('sid',$vk_cookie['sid']);
 		$session->set('sig',$vk_cookie['sig']);
-		if (!$session->get('vk_photo')){
-			$session->set('vk_photo',JRequest::getString('photo_rec', '', 'post'));
+		if (!$session->get('jsdata')){
+			$session->set('jsdata',array_merge(array('domain'=>JRequest::getString('domain', '', 'post')), 
+			JRequest::getVar('jomsocial', array(), 'post')));
 		}
 		$db = &JFactory::getDBO();
 		$db->setQuery('SELECT userid FROM #__vklogin_users WHERE vkid='.$db->Quote($vk_cookie['mid']));
@@ -85,9 +86,6 @@ class VkloginController extends JController
 				$mainframe->setUserState('com_vklogin.registration.data', $data);
 			}
 			if ($vkConfig->get( 'jomsocial' )){
-				//если jomsocial
-				$session->set('vkdata',$data);
-				$session->set('jsdata',JRequest::getVar('jomsocial', array(), 'post'));
 				$session->set('regstep',0);
 				if ($vkConfig->get( 'jomsocial' ) == 1)
 					$mainframe->redirect(JRoute::_('index.php?option=com_community&view=register', false));

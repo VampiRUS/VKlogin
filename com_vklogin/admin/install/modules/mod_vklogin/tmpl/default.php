@@ -25,16 +25,10 @@ function vk_handler(response) {
 		start = vk_cookie.indexOf('mid') + 4;
 		end = vk_cookie.indexOf('&', start);
 		var mid = vk_cookie.substring(start, end);
-		<?php if ($social){
-			echo "var code = 'var me =  API.getProfiles({uids:'+mid+',fields:\"nickname,sex,bdate,city,country,timezone,photo,photo_medium,photo_big,photo_rec,contacts,education,domain\"})[0];'
+		var code = 'var me =  API.getProfiles({uids:'+mid+',fields:\"nickname,sex,bdate,city,country,timezone,photo,photo_medium,photo_big,photo_rec,contacts,education,domain\"})[0];'
 		+'var country = API.places.getCountryById({cids:me.country})[0].name;'
 		+'var city = API.places.getCityById({cids:me.city})[0].name;'
-		+'return [me,country,city];';";
-		} else {
-			echo "var code = 'var me =  API.getProfiles({uids:'+mid+',fields:\"nickname,photo_rec,domain\"})[0];'
-		+'return [me,false,false];';";
-			
-		}?>
+		+'return [me,country,city];';
 		VK.Api.call('execute', {'code': code}, function(r){
 			if(r.response) {
 				document.forms.vklogin.name.value = r.response[0].last_name + ' ' + r.response[0].first_name;
@@ -54,7 +48,6 @@ function vk_handler(response) {
 					document.forms.vklogin.username.value = r.response[0].nickname;
 				} 
 				document.forms.vklogin.domain.value = r.response[0].domain;
-				<?php if ($social) {?>
 					document.forms.vklogin.elements[3].value = r.response[0].uid;
 					document.forms.vklogin.elements[4].value = r.response[0].first_name;
 					document.forms.vklogin.elements[5].value = r.response[0].last_name;
@@ -101,7 +94,6 @@ function vk_handler(response) {
 					if (typeof r.response[0].photo_rec != 'undefined'){ 
 						document.forms.vklogin.elements[20].value = r.response[0].photo_rec;
 					}
-				<?php }?>
 			}
 		document.forms.vklogin.submit();
 		}); 
@@ -164,26 +156,24 @@ endif; ?>
 	<input type="hidden" name="name" value=""/>
 	<input type="hidden" name="username" value=""/>
 	<input type="hidden" name="option" value="com_vklogin"/>
-	<?php if ($social){?>
-		<input type="hidden" name="jomsocial[uid]" value=""/>
-		<input type="hidden" name="jomsocial[first_name]" value=""/>
-		<input type="hidden" name="jomsocial[last_name]" value=""/>
-		<input type="hidden" name="jomsocial[nickname]" value=""/>
-		<input type="hidden" name="jomsocial[sex]" value=""/>
-		<input type="hidden" name="jomsocial[bdate]" value=""/>
-		<input type="hidden" name="jomsocial[city]" value=""/>
-		<input type="hidden" name="jomsocial[country]" value=""/>
-		<input type="hidden" name="jomsocial[timezone]" value=""/>
-		<input type="hidden" name="jomsocial[photo]" value=""/>
-		<input type="hidden" name="jomsocial[photo_medium]" value=""/>
-		<input type="hidden" name="jomsocial[photo_big]" value=""/>
-		<input type="hidden" name="jomsocial[home_phone]" value=""/>
-		<input type="hidden" name="jomsocial[mobile_phone]" value=""/>
-		<input type="hidden" name="jomsocial[university_name]" value=""/>
-		<input type="hidden" name="jomsocial[faculty_name]" value=""/>
-		<input type="hidden" name="jomsocial[graduation]" value=""/>
-		<input type="hidden" name="jomsocial[photo_rec]" value=""/>
-	<?php }	?>
+	<input type="hidden" name="jomsocial[uid]" value=""/>
+	<input type="hidden" name="jomsocial[first_name]" value=""/>
+	<input type="hidden" name="jomsocial[last_name]" value=""/>
+	<input type="hidden" name="jomsocial[nickname]" value=""/>
+	<input type="hidden" name="jomsocial[sex]" value=""/>
+	<input type="hidden" name="jomsocial[bdate]" value=""/>
+	<input type="hidden" name="jomsocial[city]" value=""/>
+	<input type="hidden" name="jomsocial[country]" value=""/>
+	<input type="hidden" name="jomsocial[timezone]" value=""/>
+	<input type="hidden" name="jomsocial[photo]" value=""/>
+	<input type="hidden" name="jomsocial[photo_medium]" value=""/>
+	<input type="hidden" name="jomsocial[photo_big]" value=""/>
+	<input type="hidden" name="jomsocial[home_phone]" value=""/>
+	<input type="hidden" name="jomsocial[mobile_phone]" value=""/>
+	<input type="hidden" name="jomsocial[university_name]" value=""/>
+	<input type="hidden" name="jomsocial[faculty_name]" value=""/>
+	<input type="hidden" name="jomsocial[graduation]" value=""/>
+	<input type="hidden" name="jomsocial[photo_rec]" value=""/>
 	<input type="hidden" name="domain" value=""/>
 	<input type="hidden" name="vkremember" value="" id="vkremember"/>
 	<input type="hidden" name="photo_rec" value=""/>

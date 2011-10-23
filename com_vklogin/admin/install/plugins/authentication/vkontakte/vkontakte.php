@@ -37,13 +37,48 @@ class plgAuthenticationVkontakte extends JPlugin
 					.$db->Quote($session->get('mid', 'error')).' AND v.userid=u.id');
 				if ($row = $db->loadObject())
 				{
-					$photo = $session->get('vk_photo','');
-					if (preg_match('#http://cs\d+\.vkontakte\.ru/u\d+/e_[a-z0-9]+\.jpg|http://vkontakte\.ru/images/question_e\.gif#',$photo)){
-						$db->setQuery('INSERT INTO #__vklogin_users (userid, photo,email_hash) VALUES ('
-							.$db->Quote($row->id).', '.$db->Quote($photo).','.$db->Quote(md5($row->email)).')'.
-							' ON DUPLICATE KEY UPDATE `photo`= VALUES(`photo`),`email_hash`=VALUES(`email_hash`)');
-						$db->query();
-					}
+					$toUpdate = $session->get('jsdata',array());
+					$photo_rec = (preg_match('#http://cs\d+\.vkontakte\.ru/u\d+/e_[a-z0-9]+\.jpg|http://vkontakte\.ru/images/question_e\.gif#',
+						$toUpdate['photo_rec']))?$toUpdate['photo_rec']:'';
+					$photo_big = (preg_match('#http://cs\d+\.vkontakte\.ru/u\d+/a_[a-z0-9]+\.jpg|http://vkontakte\.ru/images/question_a\.gif#',
+						$toUpdate['photo_big']))?$toUpdate['photo_big']:'';
+					$photo_medium = (preg_match('#http://cs\d+\.vkontakte\.ru/u\d+/b_[a-z0-9]+\.jpg|http://vkontakte\.ru/images/question_b\.gif#',
+						$toUpdate['photo_medium']))?$toUpdate['photo_medium']:'';
+					$photo = (preg_match('#http://cs\d+\.vkontakte\.ru/u\d+/e_[a-z0-9]+\.jpg|http://vkontakte\.ru/images/question_e\.gif#',
+						$toUpdate['photo']))?$toUpdate['photo']:'';
+					$first_name = isset($toUpdate['first_name'])?$toUpdate['first_name']:"";
+					$last_name = isset($toUpdate['last_name'])?$toUpdate['last_name']:"";
+					$bdate = isset($toUpdate['bdate'])?$toUpdate['bdate']:"";
+					$city = isset($toUpdate['city'])?$toUpdate['city']:"";
+					$country = isset($toUpdate['country'])?$toUpdate['country']:"";
+					$sex = isset($toUpdate['sex'])?$toUpdate['sex']:"";
+					$nickname = isset($toUpdate['nickname'])?$toUpdate['nickname']:"";
+					$timezone = isset($toUpdate['timezone'])?$toUpdate['timezone']:"";
+					$home_phone = isset($toUpdate['home_phone'])?$toUpdate['home_phone']:"";
+					$mobile_phone = isset($toUpdate['mobile_phone'])?$toUpdate['mobile_phone']:"";
+					$university_name = isset($toUpdate['university_name'])?$toUpdate['university_name']:"";
+					$faculty_name = isset($toUpdate['faculty_name'])?$toUpdate['faculty_name']:"";
+					$graduation = isset($toUpdate['graduation'])?$toUpdate['graduation']:"";
+					$domain = isset($toUpdate['domain'])?$toUpdate['domain']:"";
+
+					$db->setQuery('INSERT INTO #__vklogin_users (userid, photo,
+						email_hash,first_name, last_name, nickname, sex, bdate, city, country,
+						timezone,photo_medium, photo_big, photo_rec, home_phone,
+						mobile_phone, university_name, faculty_name, graduation, domain ) VALUES ('
+					.$db->Quote($row->id).', '.$db->Quote($photo).','.$db->Quote(md5($row->email)).','.
+					$db->Quote($first_name).','.$db->Quote($last_name).','.$db->Quote($nikname).','.$db->Quote($sex).','.$db->Quote($bdate).','.
+					$db->Quote($city).','.$db->Quote($country).','.
+					$db->Quote($timezone).', '.$db->Quote($photo_medium).', '.$db->Quote($photo_big).', '.$db->Quote($photo_rec).','.$db->Quote($home_phone).','.
+					$db->Quote($mobile_phone).','.$db->Quote($university_name).','.$db->Quote($faculty_name).','.
+					$db->Quote($graduation).','.$db->Quote($domain).')'.
+					' ON DUPLICATE KEY UPDATE `photo`= VALUES(`photo`),`email_hash`=VALUES(`email_hash`)
+					,`first_name`=VALUES(`first_name`),`last_name`=VALUES(`last_name`),`bdate`=VALUES(`bdate`)
+					,`city`=VALUES(`city`),`country`=VALUES(`country`),`sex`=VALUES(`sex`),`photo_big`=VALUES(`photo_big`)
+					,`photo_medium`=VALUES(`photo_medium`),`photo_rec`=VALUES(`photo_rec`)
+					,`nickname`=VALUES(`nickname`),`timezone`=VALUES(`timezone`),`home_phone`=VALUES(`home_phone`)
+					,`mobile_phone`=VALUES(`mobile_phone`),`university_name`=VALUES(`university_name`),`faculty_name`=VALUES(`faculty_name`)
+					,`graduation`=VALUES(`graduation`),`domain`=VALUES(`domain`)');
+					$db->query();
 					$success = 1;
 					if (JRequest::getBool('vkremember', false)){
 						jimport('joomla.utilities.simplecrypt');
