@@ -4,6 +4,7 @@ jimport('joomla.application.helper');
 require_once( JApplicationHelper::getPath( 'admin_html' ) );
 JToolBarHelper::preferences('com_vklogin', '250');
 $jspath = JPATH_ROOT.DS.'components'.DS.'com_community';
+$task = JRequest::getCmd('task');
 if ($task == 'postinstall'){
 	include_once(dirname(__FILE__).'/install/helper.php');
 	$errors = array();
