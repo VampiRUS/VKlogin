@@ -68,10 +68,17 @@ if ($type == 'logout' && $mod_id != ''){
 	$document	= &JFactory::getDocument();
 	$renderer	= $document->loadRenderer('module');
 	$db		=& JFactory::getDBO();
-
+	
+	if ($jVersion=='1.5') {
 	$query = 'SELECT id, title, module, position, params'
 		. ' FROM #__modules AS m'
 		. ' WHERE id='.intval($mod_id);
+	} else {
+	$query = 'SELECT id, title, module, position, content, showtitle, params'
+	. ' FROM #__modules AS m'
+	//. ' LEFT JOIN #__modules_menu AS mm ON mm.moduleid = m.id'
+	. ' WHERE m.id = '.intval($mod_id);
+	}
 	$db->setQuery( $query );
 	if ($mod = $db->loadObject()){
 		$file					= $mod->module;
@@ -84,5 +91,8 @@ if ($type == 'logout' && $mod_id != ''){
 		echo $renderer->render($mod, array());
 	}
 } else {
+	if ($type == 'login') {
+		JHTML::_('script', 'modules/mod_vklogin/tmpl/script.js');
+	}
 	require(JModuleHelper::getLayoutPath('mod_vklogin'));
 }
