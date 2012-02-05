@@ -20,6 +20,7 @@
 		<filename>tmpl/default.php</filename>
 		<filename>tmpl/index.html</filename>
 		<filename>tmpl/vk.jpg</filename>
+		<filename>tmpl/script.js</filename>
 	</files>
 	<config>
 		<fields name="params">
