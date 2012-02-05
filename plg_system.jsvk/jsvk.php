@@ -76,6 +76,7 @@ class plgSystemJsVk extends JPlugin
 						}
 						switch ($field->type){
 							case 'date':
+							case 'birthdate':
 								$date = explode('.',$jsdata[$field->value]);
 								$data['field'.$field->key] = (!empty($date[2])?$date[2]:'').'-'.(!empty($date[1])?$date[1]:'').'-'.(!empty($date[0])?$date[0]:'');
 								break;
@@ -102,6 +103,8 @@ class plgSystemJsVk extends JPlugin
 				$session->clear('tmpUser');
 				$session->clear('JS_REG_TOKEN');
 				$session->clear('regstep');
+				$session->clear('vkdata');
+				$session->clear('jsdata');
 				$mainframe->redirect(JRoute::_('index.php?option=com_vklogin'));
 			} else if (JRequest::getCmd('task') == 'registerUpdateProfile' && $step == 2){
 					$session->set('regstep',3);

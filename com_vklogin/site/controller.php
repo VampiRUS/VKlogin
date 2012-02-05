@@ -86,6 +86,7 @@ class VkloginController extends JController
 				$mainframe->setUserState('com_vklogin.registration.data', $data);
 			}
 			if ($vkConfig->get( 'jomsocial' )){
+				$session->set('vkdata',$data);
 				$session->set('regstep',0);
 				if ($vkConfig->get( 'jomsocial' ) == 1)
 					$mainframe->redirect(JRoute::_('index.php?option=com_community&view=register', false));
