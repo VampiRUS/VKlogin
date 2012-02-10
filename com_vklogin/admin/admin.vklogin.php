@@ -1,9 +1,11 @@
 <?php
 defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.application.helper');
+jimport('joomla.filesystem.file');
 require_once( JApplicationHelper::getPath( 'admin_html' ) );
 JToolBarHelper::preferences('com_vklogin', '250');
-$jspath = JPATH_ROOT.DS.'components'.DS.'com_community';
+$jspath = JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'core.php';
+$cbpath = JPATH_ADMINISTRATOR.DS.'components/com_comprofiler/admin.comprofiler.php';
 $task = JRequest::getCmd('task');
 if ($task == 'postinstall'){
 	include_once(dirname(__FILE__).'/install/helper.php');
@@ -29,21 +31,42 @@ if ($task == 'postinstall'){
 	}
 	
 }
-if (file_exists($jspath.DS.'libraries'.DS.'core.php')){
+if (JFile::exists($jspath)||JFile::exists($cbpath)){
 	if ($task == 'save'){
 		updateData();
 	}
 	JToolBarHelper::save();
-	HTML_vklogin::showFields(getFields());
+	HTML_vklogin::showFields(getFields(JFile::exists($cbpath)));
 }
 
-function getFields(){
+function getFields($cb){
+	if ($cb) {
+		return getFieldsCB();
+	} else {
+		return getFieldsJS();
+	}
+}
+
+function getFieldsJS() {
 	$db	= & JFactory::getDBO();
 	$query	= 'SELECT f.id,f.name,f.type,v.value FROM ' . $db->nameQuote( '#__community_fields' ) . ' AS f '
-				. 'LEFT JOIN '. $db->nameQuote( '#__vklogin' ) . ' AS v '
-				. 'ON f.id=v.id '
-				. 'WHERE f.published=1 '
-				. 'ORDER BY ' . $db->nameQuote( 'ordering' );
+	. 'LEFT JOIN '. $db->nameQuote( '#__vklogin' ) . ' AS v '
+	. 'ON f.id=v.id '
+	. 'WHERE f.published=1 '
+	. 'ORDER BY ' . $db->nameQuote( 'ordering' );
+	$db->setQuery( $query);
+	$fields	= $db->loadObjectList();
+	return $fields;
+}
+
+function getFieldsCB(){
+	$db = JFactory::getDBO();
+	$query = "SELECT f.fieldid as id,f.title as name,f.type,v.value FROM #__comprofiler_fields AS f "
+	. 'LEFT JOIN '. $db->nameQuote( '#__vklogin' ) . ' AS v '
+	. 'ON f.fieldid=v.id '
+	. 'WHERE f.published=1 AND f.registration=1 '
+	. "AND `table`='#__comprofiler' "
+	. 'ORDER BY ' . $db->nameQuote( 'ordering' );
 	$db->setQuery( $query);
 	$fields	= $db->loadObjectList();
 	return $fields;

@@ -28,7 +28,7 @@ class HTML_vklogin{
 		<table class="adminlist" style="width:80%" cellspacing="1">
 			<thead>
 				<tr>
-					<th><?php echo JText::_('COM_VKLOGIN_JOMSOCIAL_FIELD');?></th>
+					<th><?php echo JText::_('COM_VKLOGIN_SOCIAL_FIELD');?></th>
 					<th><?php echo JText::_('COM_VKLOGIN_VKONTAKTE_FIELD');?></th>
 				</tr>
 			</thead>
