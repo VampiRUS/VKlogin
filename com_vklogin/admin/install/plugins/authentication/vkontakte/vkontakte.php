@@ -38,15 +38,15 @@ class plgAuthenticationVkontakte extends JPlugin
 				if ($row = $db->loadObject())
 				{
 					$toUpdate = $session->get('jsdata',array());
-					$photo_rec = (preg_match('#http://cs\d+\.vk\.com/u\d+/e_[a-z0-9]+\.jpg|http://vk\.com/images/question_e\.gif#',
+					$photo_rec = (preg_match('#http://cs\d+\.vk\.com/u\d+/e_[a-z0-9]+\.jpg|http://vk\.com/images/camera_e\.gif#',
 						$toUpdate['photo_rec']))?$toUpdate['photo_rec']:'';
-					$photo_big = (preg_match('#http://cs\d+\.vk\.com/u\d+/a_[a-z0-9]+\.jpg|http://vk\.com/images/question_a\.gif#',
+					$photo_big = (preg_match('#http://cs\d+\.vk\.com/u\d+/a_[a-z0-9]+\.jpg|http://vk\.com/images/camera_a\.gif#',
 						$toUpdate['photo_big']))?$toUpdate['photo_big']:'';
-					$photo_medium = (preg_match('#http://cs\d+\.vk\.com/u\d+/b_[a-z0-9]+\.jpg|http://vk\.com/images/question_b\.gif#',
+					$photo_medium = (preg_match('#http://cs\d+\.vk\.com/u\d+/b_[a-z0-9]+\.jpg|http://vk\.com/images/camera_b\.gif#',
 						$toUpdate['photo_medium']))?$toUpdate['photo_medium']:'';
-					$photo_medium_rec = (preg_match('#http://cs\d+\.vk\.com/u\d+/d_[a-z0-9]+\.jpg|http://vk\.com/images/question_d\.gif#',
+					$photo_medium_rec = (preg_match('#http://cs\d+\.vk\.com/u\d+/d_[a-z0-9]+\.jpg|http://vk\.com/images/camera_d\.gif#',
 						$toUpdate['photo_medium_rec']))?$toUpdate['photo_medium_rec']:'';
-					$photo = (preg_match('#http://cs\d+\.vk\.com/u\d+/e_[a-z0-9]+\.jpg|http://vk\.com/images/question_e\.gif#',
+					$photo = (preg_match('#http://cs\d+\.vk\.com/u\d+/e_[a-z0-9]+\.jpg|http://vk\.com/images/camera_e\.gif#',
 						$toUpdate['photo']))?$toUpdate['photo']:'';
 					$first_name = isset($toUpdate['first_name'])?$toUpdate['first_name']:"";
 					$last_name = isset($toUpdate['last_name'])?$toUpdate['last_name']:"";
