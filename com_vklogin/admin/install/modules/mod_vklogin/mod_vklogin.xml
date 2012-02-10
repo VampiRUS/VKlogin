@@ -37,6 +37,7 @@
 						<option value="2">MOD_VKLOGIN_NAME_SECOND_NAME</option>
 						<option value="3">MOD_VKLOGIN_SECOND_NAME_UID</option>
 						<option value="4">MOD_VKLOGIN_NAME_UID</option>
+						<option value="5">MOD_VKLOGIN_SCREEN_NAME</option>
 					</field>
 					<field 
 						name="widget"
@@ -85,6 +86,7 @@
 			<option value="2">MOD_VKLOGIN_NAME_SECOND_NAME</option>
 			<option value="3">MOD_VKLOGIN_SECOND_NAME_UID</option>
 			<option value="4">MOD_VKLOGIN_NAME_UID</option>
+			<option value="5">MOD_VKLOGIN_SCREEN_NAME</option>
 		</param>
 		<param name="widget" type="radio" default="1" label="MOD_VKLOGIN_WIDGET" description="MOD_VKLOGIN_WIDGET_DESC">
 			<option value="0">No</option>

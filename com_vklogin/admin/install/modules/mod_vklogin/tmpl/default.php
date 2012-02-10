@@ -17,6 +17,7 @@ function getUsername(data){
 		case 2: echo 'data.first_name+" "+data.last_name;';break;
 		case 3: echo 'data.id+"_"+data.last_name;';break;
 		case 4: echo 'data.id+"_"+data.first_name;';break;
+		case 5: echo 'data.screen_name;';break;
 		case 0:
 		default: echo '"";';
 	}
