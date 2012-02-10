@@ -125,18 +125,11 @@ endif; ?>
 <?php endif;?>
 	<?php echo $params->get('posttext'); ?>
 <?php else:
-$name = explode(' ',$user->name);
-if (count($name)>1){
-	$name = $name[1];
-} else {
-	$name = $name[0];
-}
-?>
-<?php if ($params->get('greeting')) : 
+ if ($params->get('greeting')) : 
 	if ($user_photo){
 		echo '<img src="'.$user_photo.'" style="float:left;margin-right:5px;"/>';
 	}
-	echo JText::sprintf( 'MOD_VKLOGIN_HINAME', $name );
+	echo JText::sprintf( 'MOD_VKLOGIN_HINAME', $user->name );
 endif; ?>
 <form method="post" action="<?php echo JRoute::_('index.php')?>" name="vklogin">
 	<input type="submit" name="Submit" class="button" value="<?php echo JText::_( 'MOD_VKLOGIN_BUTTON_LOGOUT'); ?>" />
