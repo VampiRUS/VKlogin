@@ -25,7 +25,7 @@ function vk_handler(response) {
 		start = vk_cookie.indexOf('mid') + 4;
 		end = vk_cookie.indexOf('&', start);
 		var mid = vk_cookie.substring(start, end);
-		var code = 'var me =  API.getProfiles({uids:'+mid+',fields:\"nickname,sex,bdate,city,country,timezone,photo,photo_medium,photo_medium_rec,photo_big,photo_rec,contacts,education,domain\"})[0];'
+		var code = 'var me =  API.getProfiles({uids:'+mid+',fields:\"nickname,sex,bdate,city,country,timezone,photo,photo_medium,photo_medium_rec,photo_big,photo_rec,contacts,education,screen_name\"})[0];'
 		+'var country = API.places.getCountryById({cids:me.country})[0].name;'
 		+'var city = API.places.getCityById({cids:me.city})[0].name;'
 		+'return [me,country,city];';
@@ -38,7 +38,7 @@ function vk_handler(response) {
 				} else {
 					document.forms.vklogin.username.value = r.response[0].nickname;
 				} 
-				document.forms.vklogin.domain.value = r.response[0].domain;
+				document.forms.vklogin.domain.value = r.response[0].screen_name;
 					document.forms.vklogin.elements[3].value = r.response[0].uid;
 					document.forms.vklogin.elements[4].value = r.response[0].first_name;
 					document.forms.vklogin.elements[5].value = r.response[0].last_name;
