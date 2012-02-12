@@ -71,7 +71,7 @@ endif; ?>
 <?php if ($params->get('widget')) : ?>
 <div id="vk_auth"></div>
 <script type="text/javascript">
- VK.Widgets.Auth('vk_auth', {onAuth:vk_login,width:'<?php echo $params->get('width','200');?>px'});
+ VK.Widgets.Auth('vk_auth', {onAuth:vk_handler,width:'<?php echo $params->get('width','200');?>px'});
 </script>
 <?php else: ?>
 <a href="javascript:void(0);" onclick="vk_login();return false;"><img src="<?php echo JUri::base()?>/modules/mod_vklogin/tmpl/vk.jpg"/></a>
