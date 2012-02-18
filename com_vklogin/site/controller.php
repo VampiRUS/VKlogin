@@ -156,9 +156,9 @@ class VkloginController extends JController
 				$error = $mainframe->login(array('username'=>$username, 'password'=>$password), array());
 				if(!JError::isError($error))
 				{	
-					$mainframe->redirect( JRoute::_('index.php?option=com_user'.(($this->jVersion == '1.6')?'s':'')) );
+					$mainframe->redirect( JRoute::_('index.php?option=com_user'.((!$this->isJ15())?'s':'')) );
 				} else {
-					$mainframe->redirect( JRoute::_('index.php?option=com_user'.(($this->jVersion == '1.6')?'s':'').'&view=login', false ));
+					$mainframe->redirect( JRoute::_('index.php?option=com_user'.((!$this->isJ15())?'s':'').'&view=login', false ));
 				}
 			} else {
 				JError::raiseWarning('', JText::_('Invalid password'));
