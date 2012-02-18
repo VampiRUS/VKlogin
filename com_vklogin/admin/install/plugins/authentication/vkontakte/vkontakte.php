@@ -24,6 +24,7 @@ class plgAuthenticationVkontakte extends JPlugin
 		$success = 0;
 		if ($credentials['username'] == 'VK_LOGIN' && $credentials['password'] == 'VK_PASSWORD')
 		{
+			jimport('joomla.utilities.utility');
 			$vkConfig = &JComponentHelper::getParams( 'com_vklogin' );
 			$session =& JFactory::getSession();
 			if (md5('expire='.$session->get('expire', 'error')
@@ -38,15 +39,15 @@ class plgAuthenticationVkontakte extends JPlugin
 				if ($row = $db->loadObject())
 				{
 					$toUpdate = $session->get('jsdata',array());
-					$photo_rec = (preg_match('#http://cs\d+\.vk\.com/u\d+/e_[a-z0-9]+\.jpg|http://vk\.com/images/camera_e\.gif#',
+					$photo_rec = (preg_match('#http://cs\d+\.vk\.com/u\d+/e_[a-z0-9]+\.jpg|http://vk\.com/images/question_e\.gif#',
 						$toUpdate['photo_rec']))?$toUpdate['photo_rec']:'';
-					$photo_big = (preg_match('#http://cs\d+\.vk\.com/u\d+/a_[a-z0-9]+\.jpg|http://vk\.com/images/camera_a\.gif#',
+					$photo_big = (preg_match('#http://cs\d+\.vk\.com/u\d+/a_[a-z0-9]+\.jpg|http://vk\.com/images/question_a\.gif#',
 						$toUpdate['photo_big']))?$toUpdate['photo_big']:'';
-					$photo_medium = (preg_match('#http://cs\d+\.vk\.com/u\d+/b_[a-z0-9]+\.jpg|http://vk\.com/images/camera_b\.gif#',
+					$photo_medium = (preg_match('#http://cs\d+\.vk\.com/u\d+/b_[a-z0-9]+\.jpg|http://vk\.com/images/question_b\.gif#',
 						$toUpdate['photo_medium']))?$toUpdate['photo_medium']:'';
-					$photo_medium_rec = (preg_match('#http://cs\d+\.vk\.com/u\d+/d_[a-z0-9]+\.jpg|http://vk\.com/images/camera_d\.gif#',
+					$photo_medium_rec = (preg_match('#http://cs\d+\.vk\.com/u\d+/d_[a-z0-9]+\.jpg|http://vk\.com/images/question_d\.gif#',
 						$toUpdate['photo_medium_rec']))?$toUpdate['photo_medium_rec']:'';
-					$photo = (preg_match('#http://cs\d+\.vk\.com/u\d+/e_[a-z0-9]+\.jpg|http://vk\.com/images/camera_e\.gif#',
+					$photo = (preg_match('#http://cs\d+\.vk\.com/u\d+/e_[a-z0-9]+\.jpg|http://vk\.com/images/question_e\.gif#',
 						$toUpdate['photo']))?$toUpdate['photo']:'';
 					$first_name = isset($toUpdate['first_name'])?$toUpdate['first_name']:"";
 					$last_name = isset($toUpdate['last_name'])?$toUpdate['last_name']:"";
@@ -85,7 +86,6 @@ class plgAuthenticationVkontakte extends JPlugin
 					$success = 1;
 					if (JRequest::getBool('vkremember', false)){
 						jimport('joomla.utilities.simplecrypt');
-						jimport('joomla.utilities.utility');
 			
 						//Create the encryption key, apply extra hardening using the user agent string
 						$key = JUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
@@ -115,6 +115,28 @@ class plgAuthenticationVkontakte extends JPlugin
 					$response->password = $row->password;
 					$response->username= $row->username;
 				}
+			} elseif ($str = JRequest::getString(JApplication::getHash('JLOGIN_REMEMBER'), '', 'cookie', JREQUEST_ALLOWRAW | JREQUEST_NOTRIM))
+			{
+				jimport('joomla.utilities.simplecrypt');
+				$key = JApplication::getHash(@$_SERVER['HTTP_USER_AGENT']);
+
+				$crypt = new JSimpleCrypt($key);
+				$str = $crypt->decrypt($str);
+                $credentials = @unserialize($str);
+				if (isset($credentials['vk_username']) && isset($credentials['vk_password'])){
+					$db = &JFactory::getDBO();
+					$db->setQuery('SELECT * FROM #__users WHERE username='.
+						$db->Quote($credentials['vk_username'])." AND password=".
+						$db->Quote($credentials['vk_password']));
+					if ($row = $db->loadObject())
+					{
+						$success = 1;
+						$response->email 	= $row->email;
+						$response->fullname = $row->name;
+						$response->password = $row->password;
+						$response->username= $row->username;
+					}
+				}	
 			}
 		}
 		if ($success)
