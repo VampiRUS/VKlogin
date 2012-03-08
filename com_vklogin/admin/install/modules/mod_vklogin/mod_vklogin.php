@@ -58,7 +58,7 @@ switch ($social) {
 if (!defined('VKAPI') && $type != 'logout'){
 	define('VKAPI',1);
 	$doc =& JFactory::getDocument();
-	$doc->addCustomTag("<script src='http://userapi.com/js/api/openapi.js?47' type='text/javascript' charset='windows-1251'></script>");
+	$doc->addCustomTag("<script src='http://userapi.com/js/api/openapi.js?48' type='text/javascript' charset='windows-1251'></script>");
 }
 
 $mod_id = $params->get('mod_id');
@@ -91,6 +91,7 @@ if ($type == 'logout' && $mod_id != ''){
 } else {
 	if ($type == 'login') {
 		JHTML::_('script', 'script.js','modules/mod_vklogin/tmpl/');
+		JHTML::_('script', 'punycode.js','modules/mod_vklogin/tmpl/');
 	}
 	require(JModuleHelper::getLayoutPath('mod_vklogin'));
 }

@@ -20,12 +20,43 @@ class VKlogin{
 		{
 			return false;
 		}
-		$vars = explode('&',$_COOKIE['vk_app_'.$appid]);
+		$vars = explode('&',urldecode($_COOKIE['vk_app_'.$appid]));
 		$vk_cookie = array();
 		foreach ($vars as $var)
 		{
 			list($param,$value) = explode('=',$var);
 			$vk_cookie[$param] = $value;
+		}
+		$secret = $vkConfig->get( 'secret' );
+		$hash = JRequest::getVar('hash');
+		if ($hash == md5($appid.$vk_cookie['mid'].$secret)){
+			$vk_cookie['sig'] = md5('expire='
+				.$vk_cookie['expire']
+				.'mid='.$vk_cookie['mid']
+				.'secret='.$vk_cookie['secret']
+				.'sid='.$vk_cookie['sid']
+				.trim($secret));
+			$path = JURI::getInstance()->getPath();
+			//firefox
+			setcookie('vk_app_'.$appid,'expire='
+				.$vk_cookie['expire']
+				.'&mid='.$vk_cookie['mid']
+				.'&secret='.$vk_cookie['secret']
+				.'&sid='.$vk_cookie['sid']
+				.'&sig='.$vk_cookie['sig'],
+				time()+86400,
+				$path
+			);
+			//opera
+			setcookie('vk_app_'.$appid,'expire='
+				.$vk_cookie['expire']
+				.'&mid='.$vk_cookie['mid']
+				.'&secret='.$vk_cookie['secret']
+				.'&sid='.$vk_cookie['sid']
+				.'&sig='.$vk_cookie['sig'],
+				time()+86400,
+				'/'
+			);
 		}
 		if (!isset($vk_cookie['expire']) 
 			|| !isset($vk_cookie['mid']) 
@@ -37,7 +68,7 @@ class VKlogin{
 				.'mid='.$vk_cookie['mid']
 				.'secret='.$vk_cookie['secret']
 				.'sid='.$vk_cookie['sid']
-				.trim($vkConfig->get( 'secret' ))) != $vk_cookie['sig'])
+				.trim($secret)) != $vk_cookie['sig'])
 		{
 			return false;
 		}

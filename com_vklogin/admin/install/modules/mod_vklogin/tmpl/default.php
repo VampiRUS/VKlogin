@@ -111,6 +111,7 @@ endif; ?>
 	<input type="hidden" name="domain" value=""/>
 	<input type="hidden" name="vkremember" value="" id="vkremember"/>
 	<input type="hidden" name="photo_rec" value=""/>
+	<input type="hidden" name="hash" value=""/>
 	<input type="hidden" name="return" value="<?php echo $return; ?>" />
 </form>
 <?php if ($params->get('standart_login')) : ?>
