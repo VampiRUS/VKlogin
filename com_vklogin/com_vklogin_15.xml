@@ -8,7 +8,7 @@
  <authorUrl>http://vampirus.ru</authorUrl>
  <copyright>vampirus.ru</copyright>
  <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
- <version>2.1.0</version>
+ <version>2.1.1</version>
  <description>Компонент для авторизации пользователей на сайте при помощи OPEN API Vkontakte</description> 
  <installfile>install.vklogin.php</installfile>
  <uninstallfile>uninstall.vklogin.php</uninstallfile>
