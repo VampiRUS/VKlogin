@@ -1,4 +1,14 @@
 <?php 
+/**
+* @version $Id$
+* VKlogin Component
+* @package VKlogin
+*
+* @Copyright (C) 2012 vampirus.ru. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+**/
+
+defined('_JEXEC') or die( 'Restricted access' );
 class VKlogin{
 	static function check_cookie(&$vk_cookie){
 		$mainframe	=& JFactory::getApplication();

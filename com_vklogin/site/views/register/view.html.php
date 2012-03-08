@@ -1,5 +1,13 @@
 <?php
-// Check to ensure this file is included in Joomla!
+/**
+* @version $Id$
+* VKlogin Component
+* @package VKlogin
+*
+* @Copyright (C) 2012 vampirus.ru. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+**/
+
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view');

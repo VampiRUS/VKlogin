@@ -1,5 +1,14 @@
 <?php
-// Check to ensure this file is included in Joomla!
+/**
+* @version $Id$
+* vkontakte plugin
+* @package VKlogin
+*
+* @Copyright (C) 2012 vampirus.ru. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+**/
+
+
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.plugin.plugin' );

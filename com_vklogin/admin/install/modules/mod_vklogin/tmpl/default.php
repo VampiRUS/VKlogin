@@ -1,4 +1,13 @@
-<?php // no direct access
+<?php 
+/**
+* @version $Id$
+* VKlogin Module
+* @package VKlogin
+*
+* @Copyright (C) 2012 vampirus.ru. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+**/
+
 defined('_JEXEC') or die('Restricted access'); ?>
 <?php if($type == 'login') : ?>
 <script type="text/javascript">
