@@ -67,7 +67,7 @@ class VkloginController extends JController
 			$vkConfig = &JComponentHelper::getParams( 'com_vklogin' );
 			//joomla 1.6. form
 			$requestData = JRequest::getVar('jform', array(), 'post', 'array');
-			$username = JRequest::getString('username', @$requestData['username'], 'post');
+			$username = str_replace(array('[','<','>','"','\'','%',';','(',')','&',']'),'',JRequest::getString('username', @$requestData['username'], 'post'));
 			$name = JRequest::getString('name', @$requestData['name'], 'post');
 			$email = JRequest::getString('email', @$requestData['email'], 'post');
 			if ($vkConfig->get('silentreg') && !$email && !$vkConfig->get( 'jomsocial' )){
