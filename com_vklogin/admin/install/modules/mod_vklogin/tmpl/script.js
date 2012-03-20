@@ -10,34 +10,25 @@ function vk_handler(response) {
 			document.forms.vklogin.hash.value = response.hash;
 	}
 	if (response.session) {
-		var d = new Date();
-		var now = d.toGMTString();
-		if (Date.hasOwnProperty('format')) {
-			//mootools
-			newDate = new Date(Date.parse(now).format('%s')*1000+24*60*60*1000).toGMTString();
-		} else {
-			newDate = new Date(Date.parse(now)+24*60*60*1000).toGMTString();
-		}
-		window.Date.prototype.toGMTString = function(){
-			return newDate;
-		};
 		var result = punycode.ToASCII(window.location.hostname);
 		if (window.location.hostname != result) {
-			VK.Cookie.setRaw = function(val, ts, domain) {
-				var
-				rawCookie;
+			VK.Cookie.setRaw = function(val, ts, domain, time) {
 				domain = punycode.ToASCII(domain);
+				var rawCookie;
 				rawCookie = 'vk_app_' + VK._apiId + '=' + val + '';
-				rawCookie += (val && ts == 0 ? '' : '; expires=' + new Date(ts * 1000).toGMTString());
+				var exp = time ? (new Date().getTime() + time * 1000)
+						: ts * 1000;
+				rawCookie += (val && ts == 0 ? '' : '; expires='
+						+ new Date(exp).toGMTString());
 				rawCookie += '; path=/';
 				rawCookie += (domain ? '; domain=.' + domain : '');
 				document.cookie = rawCookie;
+
 				this._domain = domain;
 			}
 			VK.Cookie.set(response.session);
 			VK.Api.attachScript('http://api.vkontakte.ru/method/getProfiles?fields=nickname,sex,bdate,timezone,photo,photo_medium,photo_medium_rec,photo_big,photo_rec,contacts,education,screen_name&callback=getResp&uids='+response.uid);
 		} else {
-			VK.Cookie.set(response.session);
 			var code = 'var me =  API.getProfiles({uids:'+response.uid+',fields:\"nickname,sex,bdate,city,country,timezone,photo,photo_medium,photo_medium_rec,photo_big,photo_rec,contacts,education,screen_name\"})[0];'
 			+'var country = API.places.getCountryById({cids:me.country})[0].name;'
 			+'var city = API.places.getCityById({cids:me.city})[0].name;'

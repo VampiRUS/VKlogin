@@ -58,7 +58,7 @@ switch ($social) {
 if (!defined('VKAPI') && $type != 'logout'){
 	define('VKAPI',1);
 	$doc =& JFactory::getDocument();
-	$doc->addCustomTag("<script src='http://userapi.com/js/api/openapi.js?48' type='text/javascript' charset='windows-1251'></script>");
+	$doc->addCustomTag("<script src='http://userapi.com/js/api/openapi.js?49' type='text/javascript' charset='windows-1251'></script>");
 }
 
 $mod_id = $params->get('mod_id');
