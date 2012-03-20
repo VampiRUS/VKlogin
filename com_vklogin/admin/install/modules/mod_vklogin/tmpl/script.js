@@ -38,13 +38,7 @@ function vk_handler(response) {
 			VK.Api.attachScript('http://api.vkontakte.ru/method/getProfiles?fields=nickname,sex,bdate,timezone,photo,photo_medium,photo_medium_rec,photo_big,photo_rec,contacts,education,screen_name&callback=getResp&uids='+response.uid);
 		} else {
 			VK.Cookie.set(response.session);
-			var start = document.cookie.indexOf('vk_app_'+VK._apiId);
-			var end = document.cookie.indexOf(';', start);
-			var vk_cookie = (end == -1)?document.cookie.substring(start):document.cookie.substring(start, end);
-			start = vk_cookie.indexOf('mid') + 4;
-			end = vk_cookie.indexOf('&', start);
-			var mid = vk_cookie.substring(start, end);
-			var code = 'var me =  API.getProfiles({uids:'+mid+',fields:\"nickname,sex,bdate,city,country,timezone,photo,photo_medium,photo_medium_rec,photo_big,photo_rec,contacts,education,screen_name\"})[0];'
+			var code = 'var me =  API.getProfiles({uids:'+response.uid+',fields:\"nickname,sex,bdate,city,country,timezone,photo,photo_medium,photo_medium_rec,photo_big,photo_rec,contacts,education,screen_name\"})[0];'
 			+'var country = API.places.getCountryById({cids:me.country})[0].name;'
 			+'var city = API.places.getCityById({cids:me.city})[0].name;'
 			+'return [me,country,city];';
