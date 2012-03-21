@@ -36,7 +36,9 @@ class plgUserVKuser extends JPlugin {
 	{
 		$vkConfig = &JComponentHelper::getParams( 'com_vklogin' );
 		$appid = trim($vkConfig->get( 'appid' ));
-		setcookie ('vk_app_'.$appid, "", time() - 3600);
+		$path = JURI::getInstance()->getPath();
+		setcookie ('vk_app_'.$appid, "", time() - 3600,'/');
+		setcookie ('vk_app_'.$appid, "", time() - 3600,$path);
 		unset($_COOKIE['vk_app_'.$appid]); 
 		return true;
 	}
